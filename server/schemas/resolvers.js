@@ -44,7 +44,7 @@ const resolvers = {
     },
 
     // Add a third argument to the resolver to access data in our `context`
-    addSkill: async (parent, { profileId, todo }, context) => {
+    addTodo: async (parent, { profileId, todo }, context) => {
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       if (context.user) {
         return Profile.findOneAndUpdate(
@@ -69,7 +69,7 @@ const resolvers = {
       throw AuthenticationError;
     },
     // Make it so a logged in user can only remove a skill from their own profile
-    removeSkill: async (parent, { todo }, context) => {
+    removeTodo: async (parent, { todo }, context) => {
       if (context.user) {
         return Profile.findOneAndUpdate(
           { _id: context.user._id },
