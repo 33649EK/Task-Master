@@ -1,3 +1,107 @@
+:root {
+  --white:#dcdfdd;
+  --lightblue: #cfdeee;
+  --purple: #bd899f;
+  --orange: #f4bd96;
+  --dark: #615a58;
+  --medblue: #9abcce;
+  --darkestblue: #6d8087;
+
+}
+
+body {
+  font-family: "Roboto Slab", serif; 
+}
+
+/* Header styles */
+.header-title {
+  color: var(--lightblue);
+  font-size: 3rem;
+  font-family: "Roboto Slab";
+  text-align: center;
+  font-weight: 700;
+}
+
+.header-description {
+  color: var(--orange); 
+  font-size: 1.75rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Custom styles for Ant Design Button components */
+.ant-btn-primary {
+  background-color: var(--purple);
+  border-color: var(--purple);
+}
+
+/* Header main container */
+.header-main {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  background-color: var(--darkestblue); 
+  padding: 1rem; 
+}
+
+
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; 
+}
+
+/* Header content (logo and tagline or whatever) */
+.header-content {
+  text-align: center;
+  padding: 0.5rem 0; 
+}
+
+
+/* Auth buttons (Login and Signup) */
+.auth-buttons {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem; /* Adjust padding as needed */
+  gap: 10px;
+}
+.nav-button a {
+  color: inherit; /
+}
+
+/*needs some work */
+.floating-buttons {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--purple);
+  z-index: 1000;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*! I dont know what any of the stuff below is but I am too afraid to delete it so i am keeping it until its not needed -H
+
+
+
+
+
+
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
