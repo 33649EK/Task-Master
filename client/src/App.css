@@ -63,7 +63,7 @@ body {
 .auth-buttons {
   display: flex;
   justify-content: center;
-  padding: 0.5rem; /* Adjust padding as needed */
+  padding: 0.5rem; 
   gap: 10px;
 }
 .nav-button a {
@@ -83,7 +83,39 @@ body {
 }
 
 
+/*timer component styling*/
 
+.timer-container {
+  background-color: var(--medblue); 
+  
+}
+/* Custom styles for timer buttons */
+.timer-button {
+  margin: 8px 8px;
+  color: white; 
+  background-color: var(--orange); 
+  border-color: var(--orange); 
+  font-family: "Roboto Slab"; 
+  
+}
+
+/* classes for specific timer types, so we can add something extra on the long break guy */
+.timer-button.short-break {
+  background-color: var(--dark);
+  border-color: var(--dark); 
+}
+
+.timer-button.long-break {
+  background-color: var(--dark);
+  border-color: var(--dark); 
+}
+
+/* For overriding the hover state */
+.timer-button:hover {
+  opacity: 0.8; 
+  color: var(--purple);
+  background-color: var(--lightblue);
+}
 
 
 
