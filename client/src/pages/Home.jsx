@@ -1,29 +1,42 @@
-import { useQuery } from '@apollo/client';
+import React from 'react';
+import { Layout, Button, List, Input, Checkbox } from 'antd';
+const { Header, Footer, Content, Sider } = Layout;
 
-import ProfileList from '../components/ProfileList';
 
-import { QUERY_PROFILES } from '../utils/queries';
-
-const Home = () => {
-  const { loading, data } = useQuery(QUERY_PROFILES);
-  const profiles = data?.profiles || [];
-
+const HomePage = () => {
   return (
-    <main>
-      <div className="flex-row justify-center">
-        <div className="col-12 col-md-10 my-3">
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <ProfileList
-              profiles={profiles}
-              title="Here's the current roster of friends..."
-            />
-          )}
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider width={300} style={{ background: '#fff', padding: '20px' }}>
+        <div style={{ marginBottom: '20px' }}>
+          <h2>To-Do List</h2>
+          <Input.Search placeholder="Add a task" enterButton="Add" size="large" />
         </div>
-      </div>
-    </main>
+        <List
+          dataSource={['Task 1', 'Task 2', 'Task 3']}
+          renderItem={item => (
+            <List.Item>
+              <Checkbox>{item}</Checkbox>
+            </List.Item>
+          )}
+        />
+      </Sider>
+      <Layout>
+        <Header style={{ background: '#fff', padding: '0 16px' }}>
+          <h1>Timer</h1>
+        </Header>
+        <Content style={{ padding: '24px', textAlign: 'center' }}>
+          {/* Timer component can be implemented here */}
+          <h2>00:00:00</h2>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>
+          <Button type="primary">Button 1</Button>
+          <Button type="primary">Button 2</Button>
+          <Button type="primary">Button 3</Button>
+          <Button type="primary">Button 4</Button>
+        </Footer>
+      </Layout>
+    </Layout>
   );
 };
 
-export default Home;
+export default HomePage;
