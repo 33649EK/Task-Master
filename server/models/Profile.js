@@ -19,7 +19,7 @@ const profileSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  todos: [ // Not 100% sure if this works
+  todos: [ // Not 100% sure if this works ]
     {
       type: Schema.Types.ObjectId,
       ref: "Todo",
@@ -33,7 +33,6 @@ profileSchema.pre("save", async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 
