@@ -1,9 +1,15 @@
-import { Navigate, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import React from "react";
+import { Layout, Card, Typography } from "antd";
 
-import { QUERY_SINGLE_PROFILE, QUERY_ME } from '../utils/queries';
+const { Content } = Layout;
+const { Title, Paragraph } = Typography;
 
-import Auth from '../utils/auth';
+import { Navigate, useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+
+import { QUERY_SINGLE_PROFILE, QUERY_ME } from "../utils/queries";
+
+import Auth from "../utils/auth";
 
 const Profile = () => {
   const { profileId } = useParams();
@@ -38,23 +44,25 @@ const Profile = () => {
   }
 
   return (
-    <div>
-      <h2 className="card-header">
-        {profileId ? `${profile.name}'s` : 'Your'} friends have endorsed these
-        skills...
-      </h2>
-
-      {profile.skills?.length > 0 && (
-        <SkillsList
-          skills={profile.skills}
-          isLoggedInUser={!profileId && true}
-        />
-      )}
-
-      <div className="my-4 p-4" style={{ border: '1px dotted #1a1a1a' }}>
-        <SkillForm profileId={profile._id} />
-      </div>
-    </div>
+    <Layout>
+      <Content style={{ padding: "24px" }}>
+        <Card title="Time Spent" style={{ marginBottom: "24px" }}>
+          <Title level={2}>{profileId.timeSpent}</Title>
+          <Paragraph>Time spent on the platform</Paragraph>
+        </Card>
+        <Card title="Profile Information">
+          <Paragraph>
+            <strong>Name:</strong> {profileId.name}
+          </Paragraph>
+          <Paragraph>
+            <strong>Email:</strong> {profileId.email}
+          </Paragraph>
+          <Paragraph>
+            <strong>Password:</strong> {profileId.password}
+          </Paragraph>
+        </Card>
+      </Content>
+    </Layout>
   );
 };
 
