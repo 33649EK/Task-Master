@@ -41,7 +41,7 @@ const Timers = () => {
       }, 1000);
     } else if (timeLeft === 0 && timerActive) {
       setTimerActive(false);
-      // should probably add some alert or notification when the timer runs out here also might want to make it so that the pause and reset are only present when the timer button is clicked
+      message.success("Time is up, take a break");
     }
     return () => clearInterval(interval); 
   }, [timerActive, timeLeft]);
@@ -58,8 +58,12 @@ const Timers = () => {
         <Button className="timer-button" onClick={() => startTimer(50)}>50 min</Button>
         <Button className="timer-button short-break" onClick={() => startTimer(5)}>Short break</Button>
         <Button className="timer-button long-break" onClick={() => startTimer(10)}>Long break</Button>
-        <Button className="timer-button" onClick={pauseTimer}>Pause</Button>
-        <Button className="timer-button" onClick={resetTimer}>Reset</Button>
+        {timerActive && (
+          <>
+          <Button className="timer-button" onClick={pauseTimer}>Pause</Button>
+          <Button className="timer-button" onClick={resetTimer}>Reset</Button>
+          </>
+        )}
       </div>
     </Card>
   );
