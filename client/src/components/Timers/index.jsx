@@ -48,7 +48,7 @@ const Timers = () => {
 
   return (
     <Card className="timer-container">
-      <Title level={2} style={{ textAlign: 'center', fontSize:'20px', color:'#615a58' }}>Timer</Title>
+      <Title level={2} style={{ textAlign: 'center', fontSize:'24px', color:'#615a58' }}>Timer</Title>
       <Divider />
       <Input placeholder="Current task" style={{ marginBottom: '10px' }} />
       <ClockCircleOutlined style={{ fontSize: '50px', color:'#615a58', display: 'block', margin: 'auto' }} />
