@@ -120,6 +120,99 @@ body {
 
 
 
+/*login*/
+.login-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30vh; 
+  padding: 5px; 
+  background-color: transparent; 
+}
+
+.login-card {
+  max-width: 400px;
+  width: 100%;
+  background-color: var(--orange);
+  align-items: center;
+  border-radius: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.login-card-header {
+  background-color: var(--orange); 
+  padding: 16px;
+  text-align: center; 
+}
+
+.login-subtitle {
+  color: var(--dark); 
+  margin-top: 4px;
+}
+
+.login-form-button {
+  width: 100%;
+  height: auto;
+  font-size: 15px;
+  font-weight: 500;
+  background-color: var(--purple); 
+  border-color: var(--purple);
+}
+
+.login-form-button:hover {
+  background-color: var(--darkestblue); 
+  border-color: var(--darkestblue);
+}
+
+.login-error {
+  color: var(--error);
+  margin-top: 16px;
+  text-align: center;
+}
+
+/*signup page*/
+.signup-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30vh; 
+  padding: 5px; 
+  background-color: transparent;
+}
+
+.signup-card {
+  max-width: 400px;
+  width: 100%;
+  background-color: var(--orange);
+  align-items: center;
+  border-radius: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+
+.signup-subtitle {
+  color: var(--dark); 
+  margin-top: 4px;
+}
+
+.signup-form-button {
+  width: 100%;
+  font-size: 40px;
+  background-color: var(--purple); 
+  border-color: var(--purple);
+}
+
+.signup-form-button:hover {
+  background-color: var(--darkestblue); 
+  border-color: var(--darkestblue);
+}
+
+.signup-error {
+  color: var(--error);
+  margin-top: 16px;
+  text-align: center;
+}
+
 
 
 
