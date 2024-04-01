@@ -11,6 +11,11 @@
 
 body {
   font-family: "Roboto Slab", serif; 
+  background-image: url(./assets/water.jpg); 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
 }
 
 /* Header styles */
@@ -33,6 +38,13 @@ body {
 .ant-btn-primary {
   background-color: var(--purple);
   border-color: var(--purple);
+}
+.ant-btn-secondary {
+  color: var(--purple);
+  border-color: white;
+  background: white;
+  text-shadow: 0 -.5px 0 rgba(0,0,0,.12);
+  box-shadow: 0 2px 0 rgba(0,0,0,.045);
 }
 
 /* Header main container */
@@ -71,15 +83,21 @@ body {
 }
 
 /*needs some work */
-.floating-buttons {
+.floating-buttons-container {
   position: fixed;
-  top: 10px;
+  top: 10px; 
   right: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  color: var(--purple);
   z-index: 1000;
+}
+
+.custom-float-button {
+  background-color: var(--purple); 
+  color: var(--purple); 
+}
+
+.custom-float-button .anticon {
+  color: var(--darkestblue); 
+  
 }
 
 
@@ -120,8 +138,145 @@ body {
 
 
 
+/*login*/
+.login-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30vh; 
+  padding: 5px; 
+  background-color: transparent; 
+}
+
+.login-card {
+  max-width: 400px;
+  width: 100%;
+  background-color: var(--orange);
+  align-items: center;
+  border-radius: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.login-card-header {
+  background-color: var(--orange); 
+  padding: 16px;
+  text-align: center; 
+}
+
+.login-subtitle {
+  color: var(--dark); 
+  margin-top: 4px;
+}
+
+.login-form-button {
+  width: 100%;
+  height: auto;
+  font-size: 15px;
+  font-weight: 500;
+  background-color: var(--purple); 
+  border-color: var(--purple);
+}
+
+.login-form-button:hover {
+  background-color: var(--darkestblue); 
+  border-color: var(--darkestblue);
+}
+
+.login-error {
+  color: var(--error);
+  margin-top: 16px;
+  text-align: center;
+}
+
+/*signup page*/
+.signup-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30vh; 
+  padding: 5px; 
+  background-color: transparent;
+}
+
+.signup-card {
+  max-width: 400px;
+  width: 100%;
+  background-color: var(--orange);
+  align-items: center;
+  border-radius: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
 
 
+.signup-subtitle {
+  color: var(--dark); 
+  margin-top: 4px;
+}
+
+.signup-form-button {
+  width: 100%;
+  font-size: 40px;
+  background-color: var(--purple); 
+  border-color: var(--purple);
+}
+
+.signup-form-button:hover {
+  background-color: var(--darkestblue); 
+  border-color: var(--darkestblue);
+}
+
+.signup-error {
+  color: var(--error);
+  margin-top: 16px;
+  text-align: center;
+}
+
+
+/*to do list stuff*/
+.todo-list-card {
+  background-color: var(--white);
+  }
+  
+  .add-task-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .task-input {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .priority-selector {
+    width: 100px;
+    margin-right: 10px;
+  }
+  
+  .add-task-button {
+    background-color: var(--orange);
+    color: var(--dark);
+    border-color: var(--dark);
+    font-weight: 700;
+  }
+  
+  .task-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .task-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .priority-indicator {
+    margin-left: auto;
+    font-weight: 900;
+    padding-left: 10px;
+  }
+  
 
 
 

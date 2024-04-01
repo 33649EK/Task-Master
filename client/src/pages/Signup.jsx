@@ -5,6 +5,8 @@ import { useMutation } from '@apollo/client';
 import { ADD_PROFILE } from '../utils/mutations';
 
 import Auth from '../utils/auth';
+import { Form, Input, Button, Card, Typography } from 'antd';
+import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 
 const Signup = () => {
   const [formState, setFormState] = useState({
@@ -26,7 +28,6 @@ const Signup = () => {
 
   // submit form
   const handleFormSubmit = async (event) => {
-    event.preventDefault();
     console.log(formState);
 
     try {
@@ -40,62 +41,58 @@ const Signup = () => {
     }
   };
 
+ 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your username"
-                  name="name"
-                  type="text"
-                  value={formState.name}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block btn-info"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-            )}
-
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </main>
+    <div className="signup-page-container">
+      <Card className="signup-card">
+        <p className="signup-subtitle">New here? Sign up below! Already have an account? <Link to="/login">Login!</Link></p>
+        <Form
+          name="signup"
+          onFinish={handleFormSubmit}
+          className="signup-form"
+        >
+         <Form.Item
+    name="name"
+    rules={[{ required: true, message: 'Please input your username!' }]}
+  >
+    <Input
+      prefix={<UserOutlined />}
+      placeholder="Your username"
+      value={formState.name} 
+      onChange={handleChange} 
+    />
+  </Form.Item>
+  <Form.Item
+    name="email"
+    rules={[{ required: true, message: 'Please input your email!' }]}
+  >
+    <Input
+      prefix={<MailOutlined />}
+      placeholder="Your email"
+      value={formState.email} 
+      onChange={handleChange} 
+    />
+  </Form.Item>
+  <Form.Item
+    name="password"
+    rules={[{ required: true, message: 'Please input your password!' }]}
+  >
+    <Input.Password
+      prefix={<LockOutlined />}
+      placeholder="Password"
+      value={formState.password} 
+      onChange={handleChange} 
+    />
+  </Form.Item>
+  <Form.Item>
+    <Button type="primary" htmlType="submit" block>
+      Submit
+    </Button>
+  </Form.Item>
+</Form>
+        {error && <div className="signup-error">{error.message}</div>}
+      </Card>
+    </div>
   );
 };
 
