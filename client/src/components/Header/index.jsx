@@ -50,7 +50,7 @@ const Header = () => {
           <Link to="/about">
             <FloatButton icon={<InfoCircleOutlined />} tooltip="About" />
           </Link>
-          <Link to="/donate">
+          <Link to="https://buy.stripe.com/5kA3g7aFN8Im8bmeUU">
             <FloatButton icon={<DollarOutlined />} tooltip="Donate" />
           </Link>
         </FloatButton.Group>
