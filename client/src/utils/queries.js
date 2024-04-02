@@ -6,7 +6,11 @@ export const QUERY_PROFILES = gql`
     profiles {
       _id
       name
-      skills
+      todos [{
+        _id
+        text
+        isCompleted
+      }]
     }
   }
 `;
@@ -16,7 +20,11 @@ export const QUERY_SINGLE_PROFILE = gql`
     profile(profileId: $profileId) {
       _id
       name
-      skills
+      todos [{
+        _id
+        text
+        isCompleted
+      }]
     }
   }
 `;
@@ -26,7 +34,11 @@ export const QUERY_ME = gql`
     me {
       _id
       name
-      skills
+      todos [{
+        _id
+        text
+        isCompleted
+      }]
     }
   }
 `;

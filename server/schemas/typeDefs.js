@@ -31,10 +31,15 @@ const typeDefs = `
     me: Profile
   }
 
+  input AddTodoInput {
+    text: String!
+    isCompleted: Boolean = false
+  }
+
   type Mutation {
     addProfile(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addTodo(profileId: ID!, todos: String!): Profile
+    addTodo(profileId: ID!, todos: AddTodoInput!): Profile
     removeProfile: Profile
     removeTodo(todos: String!): Profile
   }
