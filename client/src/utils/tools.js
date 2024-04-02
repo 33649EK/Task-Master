@@ -96,6 +96,7 @@ const addNewTodo = async (todoData) => {
     const { data } = await addTodo({
       variables: {
         profileId: token.data._id,
+        todos: todoData,
       },
     });
 

@@ -1,4 +1,3 @@
-// This is all untouched from source code
 import { gql } from '@apollo/client';
 
 export const QUERY_PROFILES = gql`
