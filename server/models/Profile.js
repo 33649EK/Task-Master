@@ -20,6 +20,10 @@ const profileSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  friends: {
+    type: Object.Types.ObjectId,
+    ref: 'Profile',
+  },
   currentTask: {
     type: Object.Types.ObjectId,
     ref: 'Todo',
