@@ -1,10 +1,22 @@
 const typeDefs = `
   type Profile {
-    _id: ID
-    name: String
-    email: String
-    password: String
-    todos: [String]!
+    _id: ID!
+    name: String!
+    email: String!
+    password: String!
+    todos: [Todo]
+  }
+
+  type Todo {
+    _id: ID!
+    text: String!
+    isCompleted: Boolean!
+  }
+
+  type Project {
+    _id: ID!
+    members: [Profile]!
+    todos: [Todo]
   }
 
   type Auth {
@@ -22,7 +34,6 @@ const typeDefs = `
   type Mutation {
     addProfile(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-
     addTodo(profileId: ID!, todos: String!): Profile
     removeProfile: Profile
     removeTodo(todos: String!): Profile

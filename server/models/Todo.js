@@ -1,7 +1,7 @@
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const todoSchema = new Schema({
-    todoText: {
+    text: {
         type: String,
         required: true,
         trim: true,
@@ -10,12 +10,6 @@ const todoSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    todoAuthor: {
-        type: Schema.Types.ObjectId,
-        ref: 'Profile',
-    },
     });
 
-const Todo = model('Todo', todoSchema);
-
-module.exports = Todo;
+module.exports = todoSchema;
