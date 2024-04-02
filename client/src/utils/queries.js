@@ -6,11 +6,11 @@ export const QUERY_PROFILES = gql`
       _id
       name
       friends
-      todos [{
+      todos {
         _id
         text
         isCompleted
-      }]
+      }
     }
   }
 `;
@@ -21,11 +21,11 @@ export const QUERY_SINGLE_PROFILE = gql`
       _id
       name
       friends
-      todos [{
+      todos {
         _id
         text
         isCompleted
-      }]
+      }
     }
   }
 `;
@@ -36,11 +36,11 @@ export const QUERY_ME = gql`
       _id
       name
       friends
-      todos [{
+      todos {
         _id
         text
         isCompleted
-      }]
+      }
     }
   }
 `;

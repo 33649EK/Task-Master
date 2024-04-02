@@ -29,6 +29,7 @@ const getProfile = async (profileId) => {
 };
 
 // Grab the logged in user's profile data
+// Use this for finding the current user's data/todo list
 const getCurrentProfile = async () => {
   try {
     const token = Auth.getProfile();
@@ -83,6 +84,9 @@ const loginUser = async (profileData) => {
     }
 
     Auth.login(data.token);
+
+    return data.profile;
+
   } catch (err) {
     console.error(err);
   }

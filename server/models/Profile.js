@@ -21,11 +21,11 @@ const profileSchema = new Schema({
     minlength: 5,
   },
   friends: {
-    type: Object.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Profile',
   },
   currentTask: {
-    type: Object.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Todo',
   },
   todos: [todoSchema],
