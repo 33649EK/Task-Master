@@ -30,6 +30,15 @@ const Timers = () => {
     setControlsVisible(false);
   };
 
+  const handleShortBreakClick = () => {
+    startTimer(5);
+    window.location.href = "/break";
+  };
+  const handleLongBreakClick = () => {
+    startTimer(10);
+    window.location.href = "/break";
+  };
+
   // Convert seconds into MM:SS format
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
