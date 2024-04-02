@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Input, Button, Card, Typography, Divider } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
+import chimeSound from '../../assets/chime.mp3';
 
 const { Title } = Typography;
 
@@ -8,6 +9,7 @@ const Timers = () => {
   const [timeLeft, setTimeLeft] = useState(0); 
   const [timerActive, setTimerActive] = useState(false);
   const [controlsVisible, setControlsVisible] = useState(false);
+  const chimeRef = useRef(null);
 
   // Start the timer with specific minutes
   const startTimer = (duration) => {
@@ -44,6 +46,7 @@ const Timers = () => {
       }, 1000);
     } else if (timeLeft === 0 && timerActive) {
       setTimerActive(false);
+      chimeRef.current.play();
       message.success("Time is up, take a break");
     }
     return () => clearInterval(interval); 
@@ -61,6 +64,7 @@ const Timers = () => {
         <Button className="timer-button" onClick={() => startTimer(50)}>50 min</Button>
         <Button className="timer-button short-break" onClick={() => startTimer(5)}>Short break</Button>
         <Button className="timer-button long-break" onClick={() => startTimer(10)}>Long break</Button>
+        <audio ref={chimeRef} src={chimeSound} preload="auto"></audio>
         {controlsVisible && (
           <>
             <Button className="timer-button" onClick={togglePause}>{timerActive ? 'Pause' : 'Resume'}</Button>
