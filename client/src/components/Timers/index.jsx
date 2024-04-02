@@ -28,6 +28,15 @@ const Timers = () => {
     setControlsVisible(false);
   };
 
+  const handleShortBreakClick = () => {
+    startTimer(5);
+    window.location.href = "/break";
+  };
+  const handleLongBreakClick = () => {
+    startTimer(10);
+    window.location.href = "/break";
+  };
+
   // Convert seconds into MM:SS format
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -59,8 +68,8 @@ const Timers = () => {
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
         <Button className="timer-button" onClick={() => startTimer(25)}>25 min</Button>
         <Button className="timer-button" onClick={() => startTimer(50)}>50 min</Button>
-        <Button className="timer-button short-break" onClick={() => startTimer(5)}>Short break</Button>
-        <Button className="timer-button long-break" onClick={() => startTimer(10)}>Long break</Button>
+        <Button className="timer-button short-break" onClick={handleShortBreakClick}>Short break</Button>
+        <Button className="timer-button long-break" onClick={handleLongBreakClick}>Long break</Button>
         {controlsVisible && (
           <>
             <Button className="timer-button" onClick={togglePause}>{timerActive ? 'Pause' : 'Resume'}</Button>

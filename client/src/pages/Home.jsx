@@ -7,7 +7,7 @@ const { Header, Footer, Content, Sider } = Layout;
 
 const HomePage = () => {
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout>
       <Sider width={300} style={{ background: '#fff', padding: '10px' }}>
         <ToDoList></ToDoList>
       </Sider>
