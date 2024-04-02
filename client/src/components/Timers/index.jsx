@@ -7,22 +7,25 @@ const { Title } = Typography;
 const Timers = () => {
   const [timeLeft, setTimeLeft] = useState(0); 
   const [timerActive, setTimerActive] = useState(false);
+  const [controlsVisible, setControlsVisible] = useState(false);
 
   // Start the timer with specific minutes
   const startTimer = (duration) => {
     setTimeLeft(duration * 60);
     setTimerActive(true);
+    setControlsVisible(true);
   };
 
   // Pause the timer
-  const pauseTimer = () => {
-    setTimerActive(false);
+  const togglePause = () => {
+    setTimerActive(!timerActive);
   };
 
   // Reset the timer
   const resetTimer = () => {
     setTimeLeft(0);
     setTimerActive(false);
+    setControlsVisible(false);
   };
 
   // Convert seconds into MM:SS format
@@ -58,10 +61,10 @@ const Timers = () => {
         <Button className="timer-button" onClick={() => startTimer(50)}>50 min</Button>
         <Button className="timer-button short-break" onClick={() => startTimer(5)}>Short break</Button>
         <Button className="timer-button long-break" onClick={() => startTimer(10)}>Long break</Button>
-        {timerActive && (
+        {controlsVisible && (
           <>
-          <Button className="timer-button" onClick={pauseTimer}>Pause</Button>
-          <Button className="timer-button" onClick={resetTimer}>Reset</Button>
+            <Button className="timer-button" onClick={togglePause}>{timerActive ? 'Pause' : 'Resume'}</Button>
+            <Button className="timer-button" onClick={resetTimer}>Reset</Button>
           </>
         )}
       </div>
