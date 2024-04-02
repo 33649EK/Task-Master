@@ -276,6 +276,23 @@ body {
     font-weight: 900;
     padding-left: 10px;
   }
+
+  .layout-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--orange);
+  }
+  
+  /*calendar and spacing things*/
+  .side-by-side {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .timer-calendar {
+    margin: 20px; 
+    border: 1px solid #f0f0f0; 
+  }
   
 
 

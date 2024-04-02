@@ -1,29 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import { Input, Button, Card, Typography, Divider } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import { Input, Button, Card, Typography, Divider, Modal } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
+import chimeSound from '../../assets/chime.mp3';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import styled from 'styled-components';
 
-const { Title } = Typography;
+
+const { Title, Paragraph } = Typography;
+//from jadahs break page 
+const AnimatedBackground = styled.div`
+  background: linear-gradient(45deg, #ff7300, #fc0070, #00bcd4, #00ff99);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+  height: 100%; /* Set to the height of the modal content area */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+`;
 
 const Timers = () => {
+  const [isBreakModalVisible, setIsBreakModalVisible] = useState(false);
+  const [key, setKey] = useState(0); 
   const [timeLeft, setTimeLeft] = useState(0); 
   const [timerActive, setTimerActive] = useState(false);
+  const [controlsVisible, setControlsVisible] = useState(false);
+  const chimeRef = useRef(null);
+
+  const showBreakModal = (duration) => {
+    setTimeLeft(duration * 60); 
+    setTimerActive(false);
+    setIsBreakModalVisible(true); // Shows the modal with the countdown timer
+  };
+
+  const handleBreakTimerComplete = () => {
+    setIsBreakModalVisible(false); // Closes modal when timer is done
+    setKey(prevKey => prevKey + 1); 
+    message.info("Break is over, back to work!");
+  };
+
 
   // Start the timer with specific minutes
   const startTimer = (duration) => {
     setTimeLeft(duration * 60);
     setTimerActive(true);
+    setControlsVisible(true);
   };
 
   // Pause the timer
-  const pauseTimer = () => {
-    setTimerActive(false);
+  const togglePause = () => {
+    setTimerActive(!timerActive);
   };
 
   // Reset the timer
   const resetTimer = () => {
     setTimeLeft(0);
     setTimerActive(false);
+    setControlsVisible(false);
   };
+
+//i dont think we need but not removing yet  -H
+  // const handleShortBreakClick = () => {
+  //   startTimer(5);
+  //   window.location.href = "/break";
+  // };
+  // const handleLongBreakClick = () => {
+  //   startTimer(10);
+  //   window.location.href = "/break";
+  // };
 
   // Convert seconds into MM:SS format
   const formatTime = (time) => {
@@ -41,12 +90,14 @@ const Timers = () => {
       }, 1000);
     } else if (timeLeft === 0 && timerActive) {
       setTimerActive(false);
+      chimeRef.current.play();
       message.success("Time is up, take a break");
     }
     return () => clearInterval(interval); 
   }, [timerActive, timeLeft]);
 
   return (
+    <>
     <Card className="timer-container">
       <Title level={2} style={{ textAlign: 'center', fontSize:'24px', color:'#615a58' }}>Timer</Title>
       <Divider />
@@ -57,15 +108,47 @@ const Timers = () => {
         <Button className="timer-button" onClick={() => startTimer(25)}>25 min</Button>
         <Button className="timer-button" onClick={() => startTimer(50)}>50 min</Button>
         <Button className="timer-button short-break" onClick={() => startTimer(5)}>Short break</Button>
-        <Button className="timer-button long-break" onClick={() => startTimer(10)}>Long break</Button>
-        {timerActive && (
+        <Button className="timer-button long-break" onClick={() => showBreakModal(10)}>Long break</Button>
+        <audio ref={chimeRef} src={chimeSound} preload="auto"></audio>
+        {controlsVisible && (
           <>
-          <Button className="timer-button" onClick={pauseTimer}>Pause</Button>
-          <Button className="timer-button" onClick={resetTimer}>Reset</Button>
+            <Button className="timer-button" onClick={togglePause}>{timerActive ? 'Pause' : 'Resume'}</Button>
+            <Button className="timer-button" onClick={resetTimer}>Reset</Button>
           </>
         )}
       </div>
     </Card>
+     {/* Modal for Long Break Timer */}
+  <Modal
+title={<div style={{ textAlign: 'center', fontSize: '26px', color: 'yourColor' }}>Great work! Time for a long break!</div>}
+      visible={isBreakModalVisible}
+      footer={null}
+      onCancel={() => setIsBreakModalVisible(false)}
+      centered
+      style={{ top: 0 }} 
+      width="100vw" 
+      height="100vh"
+      bodyStyle={{ 
+        height: '100vh', 
+        overflowY: 'auto' 
+      }}
+    >
+    <AnimatedBackground>
+      <CountdownCircleTimer
+        key={key}
+        isPlaying={isBreakModalVisible}
+        duration={timeLeft}
+        colors={[['#00a2ae']]}
+        onComplete={handleBreakTimerComplete}
+      >
+        {({ remainingTime }) => formatTime(remainingTime)}
+      </CountdownCircleTimer>
+      <Paragraph style={{ color: 'white', textAlign: 'center', fontSize: '2rem', marginLeft:'40px' }}>
+        Breathe In, Breathe Out
+      </Paragraph>
+    </AnimatedBackground>
+  </Modal>
+  </> 
   );
 };
 

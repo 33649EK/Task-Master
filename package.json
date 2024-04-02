@@ -1,5 +1,5 @@
 {
-  "name": "tech-friends",
+  "name": "Task-Master",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
@@ -19,6 +19,8 @@
   "dependencies": {
     "@apollo/server": "^4.10.2",
     "antd": "^5.16.0",
-    "graphql": "^16.8.1"
+    "graphql": "^16.8.1",
+    "react-countdown-circle-timer": "^3.2.1",
+    "styled-components": "^6.1.8"
   }
 }
