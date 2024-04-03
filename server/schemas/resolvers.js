@@ -7,8 +7,12 @@ const resolvers = {
       return Profile.find();
     },
 
-    profile: async (parent, { profileId }) => {
-      return Profile.findOne({ _id: profileId });
+    singleProfile: async (parent, profileId) => {
+      console.log('Function is firing!')
+      console.log(`Profile ID: ${JSON.stringify(profileId)}`)
+      const profile = await Profile.findOne({ _id: profileId }).populate('friends');
+      console.log(`Profile: ${profile}`)
+      return profile;
     },
     // By adding context to our query, we can retrieve the logged 
     // in user without specifically searching for them
