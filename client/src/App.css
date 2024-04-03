@@ -1559,6 +1559,35 @@ label form [type='radio'] {
   align-content: center;
 }
 
+.list {
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.checkbox {
+  font-size: 20px;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+}
+
+.add-input {
+  margin-bottom: 20px;
+  width: 90%;
+  height: 40px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.add-input input::placeholder {
+  text-align: center; 
+}
+
+
 .row {
   display: flex;
   flex-wrap: wrap;
