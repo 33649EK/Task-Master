@@ -1,3 +1,7 @@
+// Mostly ignore this file, turns out apollo/graphql does not like these 
+// functions being in a separate file from the component that uses them.
+
+
 // import { useQuery, useMutation } from '@apollo/client';
 import Auth from './auth';
 // import { QUERY_PROFILES, QUERY_SINGLE_PROFILE, QUERY_ME } from './queries';

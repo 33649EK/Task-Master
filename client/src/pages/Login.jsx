@@ -26,8 +26,7 @@ const Login = (props) => {
 
   // submit form
   const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(formState);
+    // console.log(formState);
     try {
       const { data } = await login({
         variables: { ...formState },
@@ -37,12 +36,6 @@ const Login = (props) => {
     } catch (e) {
       console.error(e);
     }
-
-    // clear form values
-    setFormState({
-      email: '',
-      password: '',
-    });
   };
 
   
@@ -64,20 +57,22 @@ const Login = (props) => {
             className="login-form"
           >
           <Form.Item
-            name="email"
+            
             rules={[{ required: true, message: 'Please input your email!' }]}
           >
             <Input
+              name="email"
               prefix={<UserOutlined />}
               placeholder="Your email"
               onChange={handleChange}
             />
           </Form.Item>
           <Form.Item
-            name="password"
+            
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
             <Input.Password
+              name="password"
               prefix={<LockOutlined />}
               placeholder="Password"
               onChange={handleChange}
