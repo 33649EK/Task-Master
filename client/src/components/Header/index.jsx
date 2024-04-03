@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, FloatButton, Modal } from 'antd';
 import Auth from '../../utils/auth';
 import { InfoCircleOutlined, DollarOutlined } from '@ant-design/icons';
 
 const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!Auth.loggedIn()) {
+      // If the current path is not '/' or '/signup', redirect to '/'
+      if (location.pathname !== '/' && location.pathname !== '/signup') {
+        navigate('/');
+      }
+    } else {
+      // If the user is logged in and on '/', redirect to '/home'
+      if (location.pathname === '/') {
+        navigate('/home');
+      }
+    }
+  }, [navigate, location.pathname]);
 
   const showAboutModal = () => {
     setIsModalVisible(true);
@@ -48,7 +63,7 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Link to="/login">
+              <Link to="/">
                 <Button type="primary" className="m-2">Login</Button>
               </Link>
               <Link to="/signup">
@@ -71,8 +86,10 @@ const Header = () => {
       </div>
 
       {/* Modal for About button */}
-      <Modal title="About Tomato Timer" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <p>Why use tomato timer? Well basically blah blah some information.</p>
+      <Modal title="About TaskMaster" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <p>Why use TaskMaster? We all have busy schedules, and we all have too much on our plate sometimes.
+          TaskMaster will help you track your tasks and help you schedule well needed breaks too!
+        </p>
       </Modal>
     </>
   );
