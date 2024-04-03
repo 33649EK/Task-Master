@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Link } from 'react-router-dom';
-import { Button, FloatButton, Modal } from 'antd';
-import Auth from '../../utils/auth';
-import { InfoCircleOutlined, DollarOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom";
+import { Button, FloatButton, Modal } from "antd";
+import Auth from "../../utils/auth";
+import { InfoCircleOutlined, DollarOutlined } from "@ant-design/icons";
 
 const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -42,17 +42,25 @@ const Header = () => {
           {Auth.loggedIn() ? (
             <>
               <Link to="/me">
-                <Button type="primary" className="m-2">View My Profile</Button>
+                <Button type="primary" className="m-2">
+                  View My Profile
+                </Button>
               </Link>
-              <Button className="m-2" onClick={logout}>Logout</Button>
+              <Button className="m-2" onClick={logout}>
+                Logout
+              </Button>
             </>
           ) : (
             <>
               <Link to="/login">
-                <Button type="primary" className="m-2">Login</Button>
+                <Button type="primary" className="m-2">
+                  Login
+                </Button>
               </Link>
               <Link to="/signup">
-                <Button type="secondary" className="m-2">Signup</Button>
+                <Button type="secondary" className="m-2">
+                  Signup
+                </Button>
               </Link>
             </>
           )}
@@ -60,10 +68,14 @@ const Header = () => {
       </header>
 
       {/* Floating buttons for About and Donate, these need some styling work */}
-       {/* Floating buttons container */}
+      {/* Floating buttons container */}
       <div className="floating-buttons-container">
         <FloatButton.Group>
-          <FloatButton icon={<InfoCircleOutlined />} tooltip="About" onClick={showAboutModal} />
+          <FloatButton
+            icon={<InfoCircleOutlined />}
+            tooltip="About"
+            onClick={showAboutModal}
+          />
           <Link to="https://buy.stripe.com/5kA3g7aFN8Im8bmeUU">
             <FloatButton icon={<DollarOutlined />} tooltip="Donate" />
           </Link>
@@ -71,8 +83,24 @@ const Header = () => {
       </div>
 
       {/* Modal for About button */}
-      <Modal title="About Tomato Timer" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <p>Why use tomato timer? Well basically blah blah some information.</p>
+      <Modal
+        title="About Task Manager"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        style={{ fontSize: '24px' }}
+      >
+        <p>
+Task Manager is your go-to platform for efficient task management and productivity enhancement. Our mission is to provide intuitive tools that help individuals and teams stay organized, focused, and productive.<br />
+
+<strong>Task Tracking:</strong> Easily manage your tasks and deadlines with our intuitive task tracking system.<br />
+<strong>Time Management:</strong> Take control of your time with our built-in timer feature.<br />
+<strong>Break Meditation:</strong> Recharge and refocus with guided meditation sessions on our break meditation screen.<br />
+<strong>To-Do List:</strong> Stay organized with our customizable to-do list.<br />
+<strong>Secure Access:</strong> Enjoy peace of mind with our secure login/logout functionality.<br />
+<strong>Get Started Today!</strong><br />
+Sign up for Task Manager and start optimizing your productivity today! Whether you're a student, professional, or entrepreneur, Task Manager has everything you need to succeed.
+        </p>
       </Modal>
     </>
   );
