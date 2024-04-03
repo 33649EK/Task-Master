@@ -44,4 +44,22 @@ export const REMOVE_TODO = gql`
   }
 `;
 
+export const ADD_FRIEND = gql`
+  mutation addFriend($profileId: ID!, $friendId: ID!) {
+    addFriend(profileId: $profileId, friendId: $friendId) {
+      _id
+      name
+      friends
+    }
+  }
+`;
 
+export const REMOVE_FRIEND = gql`
+  mutation removeFriend($profileId: ID!, $friendId: ID!) {
+    removeFriend(profileId: $profileId, friendId: $friendId) {
+      _id
+      name
+      friends
+    }
+  }
+`;

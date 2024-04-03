@@ -85,6 +85,62 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+
+    addFriend: async (parent, { profileId, friendName }, context) => {
+      if (context.user) {
+        // Find the friend's profile based on provided name
+        const friend = await Profile.findOne({ name: friendName });
+
+        if (!friend) {
+          throw new Error('No profile with this name found!');
+        } else if (profileId === friend._id) {
+          throw new Error('Why would you add yourself as a friend?');
+        }
+
+        // Update the friend's profile to include the current user as a friend
+        await Profile.findOneAndUpdate(
+          { _id: friend._id },
+          { $addToSet: { friends: profileId } },
+          { new: true }
+        );
+
+        // Update the current user's profile to include the friend
+        return Profile.findOneAndUpdate(
+          { _id: profileId },
+          { $addToSet: { friends: friend._id } },
+          { new: true }
+        );
+      } else {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+    },
+
+    removeFriend: async (parent, { profileId, friendName }, context) => {
+      if (context.user) {
+        // Find the friend's profile based on provided name
+        const friend = await Profile.findOne({ name: friendName });
+
+        if (!friend) {
+          throw new Error('No profile with this name found!');
+        }
+
+        // Update the friend's profile to remove the current user as a friend
+        await Profile.findOneAndUpdate(
+          { _id: friend._id },
+          { $pull: { friends: profileId } },
+          { new: true }
+        );
+
+        // Update the current user's profile to remove the friend
+        return Profile.findOneAndUpdate(
+          { _id: profileId },
+          { $pull: { friends: friend._id } },
+          { new: true }
+        );
+      } else {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+    },
   },
 };
 
