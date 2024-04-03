@@ -1,10 +1,10 @@
-import { useQuery, useMutation } from '@apollo/client';
+// import { useQuery, useMutation } from '@apollo/client';
 import Auth from './auth';
-import { QUERY_PROFILES, QUERY_SINGLE_PROFILE, QUERY_ME } from './queries';
-import { ADD_PROFILE, ADD_TODO, LOGIN_USER, REMOVE_TODO } from './mutations';
-const [allProfiles] = useQuery(QUERY_PROFILES);
-const [singleProfile] = useQuery(QUERY_SINGLE_PROFILE);
-const [me] = useQuery(QUERY_ME);
+// import { QUERY_PROFILES, QUERY_SINGLE_PROFILE, QUERY_ME } from './queries';
+// import { ADD_PROFILE, ADD_TODO, LOGIN_USER, REMOVE_TODO } from './mutations';
+// const [allProfiles] = useQuery(QUERY_PROFILES);
+// const [singleProfile] = useQuery(QUERY_SINGLE_PROFILE);
+// const [me] = useQuery(QUERY_ME);
 
 // Get all profiles (Likely unnecessary for our app)
 const getProfiles = async () => {
@@ -41,10 +41,10 @@ const getCurrentProfile = async () => {
   }
 };
 
-const [addProfile] = useMutation(ADD_PROFILE);
-const [addTodo] = useMutation(ADD_TODO);
-const [login] = useMutation(LOGIN_USER);
-const [removeTodo] = useMutation(REMOVE_TODO);
+// const [addProfile] = useMutation(ADD_PROFILE);
+// const [addTodo] = useMutation(ADD_TODO);
+// const [login] = useMutation(LOGIN_USER);
+// const [removeTodo] = useMutation(REMOVE_TODO);
 
 // Add a new profile to the database
 // Name, email, and password are required
@@ -120,8 +120,8 @@ const removeUserTodo = async (todoId) => {
   try {
     const token = Auth.getProfile();
     const { data } = await removeTodo({
-      userId: token.data._id,
       variables: {
+      userId: token.data._id,
         _id: todoId,
       },
     });
