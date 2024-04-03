@@ -1,4 +1,3 @@
-// This is all untouched from source code
 import { gql } from '@apollo/client';
 
 export const QUERY_PROFILES = gql`
@@ -6,7 +5,12 @@ export const QUERY_PROFILES = gql`
     profiles {
       _id
       name
-      skills
+      friends
+      todos {
+        _id
+        text
+        isCompleted
+      }
     }
   }
 `;
@@ -16,17 +20,27 @@ export const QUERY_SINGLE_PROFILE = gql`
     profile(profileId: $profileId) {
       _id
       name
-      skills
+      friends
+      todos {
+        _id
+        text
+        isCompleted
+      }
     }
   }
 `;
 
 export const QUERY_ME = gql`
-  query me {
-    me {
+  query me($profileId: ID!) {
+    me(profileId: $profileId) {
       _id
       name
-      skills
+      friends
+      todos {
+        _id
+        text
+        isCompleted
+      }
     }
   }
 `;

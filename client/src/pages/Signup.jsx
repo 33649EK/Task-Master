@@ -19,6 +19,7 @@ const Signup = () => {
   // update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
+    // console.log(`Name: ${name}, Value: ${value}`);
 
     setFormState({
       ...formState,
@@ -41,55 +42,53 @@ const Signup = () => {
     }
   };
 
- 
   return (
     <div className="signup-page-container">
       <Card className="signup-card">
-        <p className="signup-subtitle">New here? Sign up below! Already have an account? <Link to="/login">Login!</Link></p>
-        <Form
-          name="signup"
-          onFinish={handleFormSubmit}
-          className="signup-form"
-        >
-         <Form.Item
-    name="name"
-    rules={[{ required: true, message: 'Please input your username!' }]}
-  >
-    <Input
-      prefix={<UserOutlined />}
-      placeholder="Your username"
-      value={formState.name} 
-      onChange={handleChange} 
-    />
-  </Form.Item>
-  <Form.Item
-    name="email"
-    rules={[{ required: true, message: 'Please input your email!' }]}
-  >
-    <Input
-      prefix={<MailOutlined />}
-      placeholder="Your email"
-      value={formState.email} 
-      onChange={handleChange} 
-    />
-  </Form.Item>
-  <Form.Item
-    name="password"
-    rules={[{ required: true, message: 'Please input your password!' }]}
-  >
-    <Input.Password
-      prefix={<LockOutlined />}
-      placeholder="Password"
-      value={formState.password} 
-      onChange={handleChange} 
-    />
-  </Form.Item>
-  <Form.Item>
-    <Button type="primary" htmlType="submit" block>
-      Submit
-    </Button>
-  </Form.Item>
-</Form>
+        <p className="signup-subtitle">
+          New here? Sign up below! Already have an account?{' '}
+          <Link to="/login">Login!</Link>
+        </p>
+        <Form name="signup" onFinish={handleFormSubmit} className="signup-form">
+          <Form.Item
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
+            <Input
+              name="name"
+              prefix={<UserOutlined />}
+              placeholder="Your username"
+              value={formState.name}
+              onChange={handleChange}
+            />
+          </Form.Item>
+          <Form.Item
+            rules={[{ required: true, message: 'Please input your email!' }]}
+          >
+            <Input
+              name="email"
+              prefix={<MailOutlined />}
+              placeholder="Your email"
+              value={formState.email}
+              onChange={handleChange}
+            />
+          </Form.Item>
+          <Form.Item
+            rules={[{ required: true, message: 'Please input your password!' }]}
+          >
+            <Input.Password
+              name="password"
+              prefix={<LockOutlined />}
+              placeholder="Password"
+              value={formState.password}
+              onChange={handleChange}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
         {error && <div className="signup-error">{error.message}</div>}
       </Card>
     </div>

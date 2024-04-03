@@ -1,5 +1,3 @@
-// This is all untouched from source code
-
 import { gql } from '@apollo/client';
 
 export const ADD_PROFILE = gql`
@@ -14,12 +12,12 @@ export const ADD_PROFILE = gql`
   }
 `;
 
-export const ADD_SKILL = gql`
-  mutation addSkill($profileId: ID!, $skill: String!) {
-    addSkill(profileId: $profileId, skill: $skill) {
+export const ADD_TODO = gql`
+  mutation addTodo($profileId: ID!, $todo: String!) {
+    addTodo(profileId: $profileId, todo: $todo) {
       _id
       name
-      skills
+      todos
     }
   }
 `;
@@ -36,12 +34,14 @@ export const LOGIN_USER = gql`
   }
 `;
 
-export const REMOVE_SKILL = gql`
-  mutation removeSkill($skill: String!) {
-    removeSkill(skill: $skill) {
+export const REMOVE_TODO = gql`
+  mutation removeTodo($_id: ID!) {
+    removeTodo(_id: $_id) {
       _id
       name
-      skills
+      todos
     }
   }
 `;
+
+
