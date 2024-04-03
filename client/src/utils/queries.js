@@ -37,8 +37,8 @@ export const QUERY_SINGLE_PROFILE = gql`
 `;
 
 export const QUERY_ME = gql`
-  query me($profileId: ID!) {
-    me(profileId: $profileId) {
+  query me {
+    me {
       _id
       name
       friends {
@@ -52,3 +52,4 @@ export const QUERY_ME = gql`
     }
   }
 `;
+

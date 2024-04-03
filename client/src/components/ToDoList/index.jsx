@@ -1,87 +1,95 @@
 import React, { useState } from 'react';
-import { Card, Checkbox, Input, Button, Select } from 'antd';
-const { Option } = Select;
+import { List, Checkbox, Modal, Button, Input, Card } from 'antd';
 
-const ToDoList = () => {
-  const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState('');
-  const [priority, setPriority] = useState('low'); // default priority is set to low
+const TodoList = () => {
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Feed the cats', grayedOut: false },
+    { id: 2, text: 'Water the worms', grayedOut: false },
+    { id: 3, text: 'Brush the zebras', grayedOut: false },
+  ]);
+  const [visible, setVisible] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(null);
+  const [inputValue, setInputValue] = useState('');
 
-  // Function to sort tasks by priority, idk if we want that but it felt like an idea 
-  const sortTasks = (tasks) => {
-    const priorityOrder = { 'high': 1, 'medium': 2, 'low': 3 };
-    return tasks.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
-  };
-  const addTodo = () => {
-    const newTodo = {
-      id: Math.ceil(Math.random() * 10000), // changed to prevent duplicate ids in the data (maybe a better way to do this)
-      text: input,
-      priority: priority,
-    };
-
-    const newTodos = sortTasks([...todos, newTodo]);
-
-    setTodos(newTodos);
-    setInput('');
-    setPriority('low'); // resets priority to default after adding the current task
-  };
-
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
-  };
-
-  const handlePriorityChange = (value) => {
-    setPriority(value);
-  };
-
-  const priorityIndicator = (priority) => {
-    switch (priority) {
-      case 'high':
-        return <span style={{ color: 'red' }}>!</span>;
-      case 'medium':
-        return <span style={{ color: 'orange' }}>•</span>;
-      case 'low':
-        return <span style={{ color: 'green' }}>•</span>;
-      default:
-        return null;
+  const handleAdd = () => {
+    if (inputValue.trim() !== '') {
+      const newTodo = {
+        id: todos.length + 1,
+        text: inputValue,
+        grayedOut: false,
+      };
+      setTodos([...todos, newTodo]);
+      setInputValue('');
     }
   };
 
+  const handleDelete = () => {
+    const updatedTodos = todos.filter((todo) => todo.id !== idToDelete);
+    setTodos(updatedTodos);
+    setVisible(false);
+  };
+
+  const handleKeepOnList = () => {
+    const updatedItems = todos.map((todo) =>
+      todo.id === idToDelete ? { ...todo, grayedOut: true } : todo
+    );
+    setTodos(updatedItems);
+    setVisible(false);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
+  const handleCheckboxChange = (id) => {
+    setIdToDelete(id);
+    setVisible(true);
+  };
+
   return (
-    <Card
-      title={<div style={{ fontSize: '24px', color: '#615a58', textAlign: 'center' }}>To Do List</div>}
-      className="todo-list-card"
-    >
-      <div className="add-task-row">
-        <Input
-          className="task-input"
-          placeholder="Task Name here"
-          value={input}
-          onChange={handleInputChange}
-        />
-        <Select
-          className="priority-selector"
-          value={priority} 
-          onChange={handlePriorityChange}
-        >
-          <Option value="high">High</Option>
-          <Option value="medium">Medium</Option>
-          <Option value="low">Low</Option>
-        </Select>
-        <Button className="add-task-button" onClick={addTodo}>
-          Add Task
-        </Button>
+    <div className="todo-list-container" style={{ backgroundColor: '#f4bd96', minHeight: '100vh', padding: '20px' }}>
+    <div className="input-container">
+      <Input
+        placeholder="Add new item"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onPressEnter={handleAdd}
+        className="add-input"
+      />
       </div>
-      <ul className="task-list">
-        {todos.map((todo) => (
-          <li key={todo.id} className="task-item">
-            <Checkbox>{todo.text}</Checkbox>
-            <div className="priority-indicator">{priorityIndicator(todo.priority)}</div>
-          </li>
-        ))}
-      </ul>
-    </Card>
+      <List
+        dataSource={todos}
+        renderItem={(item) => (
+          <List.Item style={{ backgroundColor: item.grayedOut ? '#f0f0f0' : 'transparent' }}>
+            <Checkbox
+              onChange={() => handleCheckboxChange(item.id)}
+              style={{ textDecoration: item.grayedOut ? 'line-through' : 'none' }}
+              className="checkbox"
+            >
+              {item.text}
+            </Checkbox>
+          </List.Item>
+        )}
+        className="list"
+      />
+      <Modal
+        title="Delete Todo"
+        visible={visible}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="keepOnList" onClick={handleKeepOnList} className="keep-on-list">
+            Keep on List
+          </Button>,
+          <Button key="delete" type="danger" onClick={handleDelete} className="delete">
+            Delete
+          </Button>,
+        ]}
+        className="modal"
+      >
+        <p>Do you want to delete this item?</p>
+      </Modal>
+    </div>
   );
 };
 
-export default ToDoList;
+export default TodoList;
