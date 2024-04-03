@@ -1587,6 +1587,10 @@ label form [type='radio'] {
   text-align: center; 
 }
 
+.checkbox input[type="checkbox"]:checked + .ant-checkbox-inner {
+  background-color: #9abcce !important;
+  border-color: #9abcce !important;
+}
 
 .row {
   display: flex;

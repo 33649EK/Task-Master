@@ -107,7 +107,7 @@ const Timers = () => {
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
         <Button className="timer-button" onClick={() => startTimer(25)}>25 min</Button>
         <Button className="timer-button" onClick={() => startTimer(50)}>50 min</Button>
-        <Button className="timer-button short-break" onClick={() => startTimer(5)}>Short break</Button>
+        <Button className="timer-button short-break" onClick={() => showBreakModal(5)}>Short break</Button>
         <Button className="timer-button long-break" onClick={() => showBreakModal(10)}>Long break</Button>
         <audio ref={chimeRef} src={chimeSound} preload="auto"></audio>
         {controlsVisible && (
