@@ -55,6 +55,7 @@ const TodoList = () => {
         padding: "20px",
       }}
     >
+      <p></p>
       <div className="input-container">
         <Input
           placeholder="Add new item"
