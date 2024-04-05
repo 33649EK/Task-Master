@@ -4,9 +4,9 @@ const RainSvg = (props) => {
   return (
     <svg
       fill={props.color || "#000000"}
-      height={props.size || "22px"} 
-      width={props.size || "22px"} 
-      viewBox="0 0 385.407 385.407"
+      height={props.size || "18px"} 
+      width={props.size || "18px"} 
+      viewBox="5 0 385.407 385.407"
       {...props} 
     >
       <g>
