@@ -1,11 +1,11 @@
 :root {
   --white:#dcdfdd;
-  --lightblue: #cfdeee;
-  --purple: #bd899f;
-  --orange: #f4bd96;
-  --dark: #615a58;
-  --medblue: #9abcce;
-  --darkestblue: #6d8087;
+  --lightblue: #92B6B1;
+  --purple: #E8DDB5;
+  --orange: #B2C9AB;
+  --dark: #615a58;/*not*/
+  --medblue: #788AA3;
+  --darkestblue: #666A86;
 
 }
 
@@ -20,7 +20,7 @@ body {
 
 /* Header styles */
 .header-title {
-  color: var(--lightblue);
+  color: var(--white);
   font-size: 3rem;
   font-family: "Roboto Slab";
   text-align: center;
@@ -36,12 +36,14 @@ body {
 
 /* Custom styles for Ant Design Button components */
 .ant-btn-primary {
-  background-color: var(--purple);
-  border-color: var(--purple);
+  background-color: var(--lightblue);
+  font-weight: 500;
+  border-color: var(--lightblue);
 }
 .ant-btn-secondary {
-  color: var(--purple);
+  color: var(--darkestblue);
   border-color: white;
+  font-weight: 500;
   background: white;
   text-shadow: 0 -.5px 0 rgba(0,0,0,.12);
   box-shadow: 0 2px 0 rgba(0,0,0,.045);
@@ -104,29 +106,26 @@ body {
 /*timer component styling*/
 
 .timer-container {
-  background-color: var(--medblue); 
+  background-color: var(--lightblue); 
   
 }
 /* Custom styles for timer buttons */
 .timer-button {
   margin: 8px 8px;
   color: white; 
-  background-color: var(--orange); 
-  border-color: var(--orange); 
+  background-color: var(--medblue); 
+  border-color: var(--medblue); 
   font-family: "Roboto Slab"; 
   
 }
 
 /* classes for specific timer types, so we can add something extra on the long break guy */
-.timer-button.short-break {
-  background-color: var(--dark);
-  border-color: var(--dark); 
+.timer-button.short-break, .timer-button.long-break {
+  background-color: var(--darkestblue);
+  border-color: var(--darkestblue); 
 }
 
-.timer-button.long-break {
-  background-color: var(--dark);
-  border-color: var(--dark); 
-}
+
 
 /* For overriding the hover state */
 .timer-button:hover {
@@ -163,7 +162,7 @@ body {
   text-align: center; 
 }
 
-.login-subtitle {
+.login-subheader {
   color: var(--dark); 
   margin-top: 4px;
 }
@@ -173,8 +172,8 @@ body {
   height: auto;
   font-size: 15px;
   font-weight: 500;
-  background-color: var(--purple); 
-  border-color: var(--purple);
+  background-color: var(--medblue); 
+  border-color: var(--medblue);
 }
 
 .login-form-button:hover {
@@ -216,8 +215,8 @@ body {
 .signup-form-button {
   width: 100%;
   font-size: 40px;
-  background-color: var(--purple); 
-  border-color: var(--purple);
+  background-color: var(--medblue); 
+  border-color: var(--medblue);
 }
 
 .signup-form-button:hover {
@@ -232,7 +231,7 @@ body {
 }
 
 
-/*to do list stuff*/
+/*to do list stuff here ---- might not need this if all the styling is in the jsx*/
 .todo-list-card {
   background-color: var(--white);
   }
