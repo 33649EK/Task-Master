@@ -294,7 +294,53 @@ body {
   }
   
 
+/*landing page*/
 
+.landing-page-card .ant-card-head-title {
+  font-size: 30px;
+  text-align: center;
+  color: var(--darkestblue); 
+  margin-bottom: 5px;
+}
+
+.landing-page-card {
+  width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border-color: var(--orange);
+  border-width: 6px;
+  border-radius: 7%;
+}
+
+.landing-page-description {
+  margin-bottom: 20px;
+  font-size: 17px;
+}
+
+.landing-page-features {
+  list-style-type:disc;
+  margin-left: 20px;
+}
+
+.landing-page-call-to-action {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  color: var(--darkestblue);
+}
+
+/*footer*/
+.custom-footer-button {
+  background-color: var(--darkestblue);
+  width: 130px;
+  height: 40px;
+  color: white;
+  border-color: var(--darkestblue);
+  font-weight: bold;
+  border-top:5%;
+  border-radius: 10px;
+}
 
 
 /*! I dont know what any of the stuff below is but I am too afraid to delete it so i am keeping it until its not needed -H
