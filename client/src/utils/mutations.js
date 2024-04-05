@@ -69,3 +69,13 @@ export const REMOVE_FRIEND = gql`
     }
   }
 `;
+
+export const UPDATE_CURRENT_TASK = gql`
+  mutation updateCurrentTask($profileId: ID!, $currentTask: String!) {
+    updateCurrentTask(profileId: $profileId, currentTask: $currentTask) {
+      _id
+      name
+      currentTask
+    }
+  }
+`;

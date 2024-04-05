@@ -22,6 +22,18 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+
+    todos: async (parent, { profileId }) => {
+      const profile = await Profile.findOne({ _id: profileId });
+
+      return profile.todos;
+    },
+
+    currentTask: async (parent, { profileId }) => {
+      const profile = await Profile.findOne({ _id: profileId });
+
+      return profile.currentTask;
+    },
   },
 
   Mutation: {
@@ -144,6 +156,17 @@ const resolvers = {
       } else {
         throw new AuthenticationError('You need to be logged in!');
       }
+    },
+
+    updateCurrentTask: async (parent, { profileId, currentTask }, context) => {
+      if (context.user) {
+        return Profile.findOneAndUpdate(
+          { _id: profileId },
+          { currentTask: currentTask },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
 };

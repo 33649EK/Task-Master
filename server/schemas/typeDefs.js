@@ -51,6 +51,7 @@ const typeDefs = `
   extend type Mutation {
     addTodo(profileId: ID!, todos: AddTodoInput!): Profile
     removeTodo(todos: String!): Profile
+    updateCurrentTask(profileId: ID!, currentTask: String!): Profile
   }
 
   extend type Mutation {
