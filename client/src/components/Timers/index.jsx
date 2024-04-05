@@ -5,7 +5,6 @@ import { ClockCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import chimeSound from '../../assets/chime.mp3';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import styled from 'styled-components';
-import HomePage from '../Break';
 
 const { Title, Paragraph } = Typography;
 
@@ -40,18 +39,6 @@ const TimerContent = styled.div`
   width: 100%;
 `;
 
-const CenteredText = styled(Paragraph)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  text-align: center;
-  font-size: 2rem;
-  margin: 0;
-  z-index: 10;
-`;
-
 const DeleteButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -76,6 +63,7 @@ const Timers = () => {
   const [controlsVisible, setControlsVisible] = useState(false);
   const [currentTask, setCurrentTask] = useState('');
   const [displayedTask, setDisplayedTask] = useState('');
+  const [isTaskEntered, setIsTaskEntered] = useState(false); // New state to track if task is entered
   const chimeRef = useRef(null);
 
   const showBreakModal = (duration) => {
@@ -139,6 +127,7 @@ const Timers = () => {
   const handleInputEnter = () => {
     setDisplayedTask(currentTask);
     setCurrentTask('');
+    setIsTaskEntered(true); // Set the state to indicate that the task is entered
   };
 
   return (
@@ -147,7 +136,18 @@ const Timers = () => {
         <Title level={2} style={{ textAlign: 'center', fontSize:'24px', color:'#615a58' }}>Timer</Title>
         <Divider />
         <div style={{ position: 'relative' }}>
-          <Paragraph style={{ textAlign: 'center', color:'#615a58', fontSize: '18px', marginBottom: '10px', fontSize: '24px' }}>{displayedTask}</Paragraph>
+          <Paragraph
+            style={{
+              textAlign: 'center',
+              color:'#615a58',
+              fontSize: '18px',
+              marginBottom: '10px',
+              fontSize: '24px',
+              fontWeight: isTaskEntered ? 'bold' : 'normal', // Apply bold font weight when the task is entered
+            }}
+          >
+            {displayedTask}
+          </Paragraph>
           {displayedTask && (
             <DeleteButtonContainer>
               <SmallButton type="primary" danger onClick={deleteTask}>

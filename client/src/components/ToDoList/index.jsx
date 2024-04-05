@@ -6,9 +6,9 @@ import { ADD_TODO, REMOVE_TODO } from "../../utils/mutations";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([
-    { id: 1, text: "Feed the cats", grayedOut: false },
-    { id: 2, text: "Wash the Dishes", grayedOut: false },
-    { id: 3, text: "Do Laundry", grayedOut: false },
+    { id: 1, text: "Practice MongoDB", grayedOut: false },
+    { id: 2, text: "10 Algorithm Problems", grayedOut: false },
+    { id: 3, text: "React Homework", grayedOut: false },
   ]);
   const [visible, setVisible] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
