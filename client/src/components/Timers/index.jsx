@@ -4,26 +4,31 @@ import { ClockCircleOutlined } from '@ant-design/icons';
 import chimeSound from '../../assets/chime.mp3';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import styled from 'styled-components';
-
+import HomePage from '../Break';
 
 const { Title, Paragraph } = Typography;
-//from jadahs break page 
+
 const AnimatedBackground = styled.div`
-  background: linear-gradient(45deg, #ff7300, #fc0070, #00bcd4, #00ff99);
+  background: linear-gradient(-45deg, #155725, #153b57, #9e9c1b);
   background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
-  height: 100%; /* Set to the height of the modal content area */
+  animation: gradient 15s ease infinite;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  @keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 `;
-
 
 const TimerContent = styled.div`
   position: relative;
@@ -33,8 +38,6 @@ const TimerContent = styled.div`
   height: 100%;
   width: 100%;
 `;
-
-
 
 const CenteredText = styled(Paragraph)`
   position: absolute;
@@ -88,13 +91,6 @@ const Timers = () => {
     setControlsVisible(false);
   };
 
-//i dont think we need but not removing yet  -H
-  // const handleShortBreakClick = () => {
-  //   startTimer(5);
-  //   window.location.href = "/break";
-  // };
-
-
   // Convert seconds into MM:SS format
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -141,43 +137,43 @@ const Timers = () => {
     </Card>
      {/* Modal for Long Break Timer */}
   <Modal
- title={<div style={{ textAlign: 'center', fontSize: '26px', color: '#615a58'}}>Great work! Time for a long break!</div>}
- visible={isBreakModalVisible}
- footer={null}
- onCancel={() => setIsBreakModalVisible(false)}
- centered
- style={{ top: 0 }}
- width="100vw"
- height="100vh"
- bodyStyle={{
-   height: '100vh',
-   overflowY: 'auto'
- }}
->
- <AnimatedBackground>
-   <TimerContent>
-     <CountdownCircleTimer
-       key={key}
-       isPlaying={isBreakModalVisible}
-       duration={timeLeft}
-       colors={[['#00a2ae']]}
-       onComplete={handleBreakTimerComplete}
-       size={350} // timer size
-     >
-       {({ remainingTime }) => (
-         <>
-           <Title style={{ position: 'absolute', color: '#dcdfdd', top: '65%' }}>
-             {formatTime(remainingTime)}
-           </Title>
-           <CenteredText style={{ position: 'absolute', fontWeight: '600',color: 'white', top: '25%' }}>
-             Breathe In, Breathe Out
-           </CenteredText>
-         </>
-       )}
-     </CountdownCircleTimer>
-   </TimerContent>
- </AnimatedBackground>
-</Modal>
+    title={<div style={{ textAlign: 'center', fontSize: '26px', color: '#615a58' }}>Great work! Time for a long break!</div>}
+    visible={isBreakModalVisible}
+    footer={null}
+    onCancel={() => setIsBreakModalVisible(false)}
+    centered
+    style={{ top: 0 }}
+    width="100vw"
+    height="100vh"
+    bodyStyle={{
+      height: '100vh',
+      overflowY: 'auto'
+    }}
+  >
+    <AnimatedBackground>
+      <TimerContent>
+        <CountdownCircleTimer
+          key={key}
+          isPlaying={isBreakModalVisible}
+          duration={timeLeft}
+          colors={[['#00a2ae']]}
+          onComplete={handleBreakTimerComplete}
+          size={350} // timer size
+        >
+          {({ remainingTime }) => (
+            <>
+              <Title style={{ position: 'absolute', color: '#dcdfdd', top: '65%' }}>
+                {formatTime(remainingTime)}
+              </Title>
+              <CenteredText style={{ position: 'absolute', fontWeight: '600', color: 'white', top: '25%' }}>
+                Breathe In, Breathe Out
+              </CenteredText>
+            </>
+          )}
+        </CountdownCircleTimer>
+      </TimerContent>
+    </AnimatedBackground>
+  </Modal>
 </>
 );
 };
