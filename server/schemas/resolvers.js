@@ -67,18 +67,18 @@ const resolvers = {
     addTodo: async (parent, { profileId, todo }, context) => {
       // If context has a `user` property, that means the user executing this
       // mutation has a valid JWT and is logged in
-      if (context.user) {
-        return Profile.findOneAndUpdate(
-          { _id: profileId },
-          {
-            $addToSet: { todos: todo },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-      }
+      
+      return Profile.findOneAndUpdate(
+        { _id: profileId },
+        {
+          $addToSet: { todos: { text: todo } },
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
       // If user attempts to execute this mutation and isn't logged in,
       // throw an error
       throw AuthenticationError;

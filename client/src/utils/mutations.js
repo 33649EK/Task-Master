@@ -17,7 +17,11 @@ export const ADD_TODO = gql`
     addTodo(profileId: $profileId, todo: $todo) {
       _id
       name
-      todos
+      todos {
+        _id
+        text
+        isCompleted
+      }
     }
   }
 `;
