@@ -8,8 +8,9 @@ import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import ErrorPage from './pages/ErrorPage';
-import Break from './components/Break';
 import FriendsTest from './pages/friendsTest.jsx';
+import LandingPage from './pages/LandingPage'; 
+
 
 const router = createBrowserRouter([
   {
@@ -19,13 +20,14 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Login />,
-      },
-      {
+        element: <LandingPage />,
+      },{
         path: '/home',
         element: <Home />,
-      },
-      {
+      }, {
+        path: '/login',
+        element: <Login />
+      }, {
         path: '/signup',
         element: <Signup />,
       },
@@ -36,10 +38,6 @@ const router = createBrowserRouter([
       {
         path: '/me',
         element: <Profile />,
-      },
-      {
-        path: '/break',
-        element: <Break />,
       },
       {
         path: '/friendsTest',

@@ -20,7 +20,7 @@ const Header = () => {
   useEffect(() => {
     if (!Auth.loggedIn()) {
       // If the current path is not '/' or '/signup', redirect to '/'
-      if (location.pathname !== '/' && location.pathname !== '/signup') {
+      if (location.pathname !== '/login' && location.pathname !== '/signup') {
         navigate('/');
       }
     } else {
@@ -116,7 +116,7 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Link to="/">
+              <Link to="/login">
                 <Button type="primary" className="m-2">Login</Button>
               </Link>
               <Link to="/signup">
@@ -188,5 +188,4 @@ Sign up for Task Manager and start optimizing your productivity today! Whether y
 };
 
 export default Header;
-
 
