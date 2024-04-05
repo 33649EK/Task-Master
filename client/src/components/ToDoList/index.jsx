@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { List, Checkbox, Modal, Button, Input, Card } from 'antd';
 import { useQuery, useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
@@ -7,11 +7,8 @@ import { ADD_TODO, REMOVE_TODO } from '../../utils/mutations';
 
 const TodoList = () => {
   const token = Auth.getProfile();
-  console.log(JSON.stringify(token));
 
-  // const [todos, setTodos] = useState([
-  //   { id: '', text: '', isCompleted: false },
-  // ]);
+  const [todos, setTodos] = useState([]);
 
   const [visible, setVisible] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
@@ -19,17 +16,23 @@ const TodoList = () => {
 
   const { loading, data } = useQuery(QUERY_TODOS, {
     variables: { profileId: token.data._id },
-  });
+  })
   const [addTodo] = useMutation(ADD_TODO);
   const [removeTodo] = useMutation(REMOVE_TODO);
+
+  useEffect(() => {
+    if (!loading && data) {
+      setTodos(data.todos);
+      console.log(`Data: ${JSON.stringify(todos)}`);``
+    }
+  }, [data, loading]);
+
 
   if (loading) {
     return <div>Loading...</div>;
   } else if (!data) {
     return <div>Error!</div>;
   }
-
-  console.log(JSON.stringify(data));
 
   const handleAdd = () => {
     if (!inputValue) {
