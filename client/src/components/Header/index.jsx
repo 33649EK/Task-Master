@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, FloatButton, Modal } from 'antd';
 import Auth from '../../utils/auth';
 import { InfoCircleOutlined, DollarOutlined } from '@ant-design/icons';
+import RainSvg from '../Svg/Rain';
+import rainSound from '../../assets/rain&vibe.mp3'
+import pianoSound from '../../assets/piano.mp3'
+import poppySound from '../../assets/poppy.mp3'
 
 const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
+  const rainRef = useRef(null)
+  const pianoRef = useRef(null)
+  const poppyRef = useRef(null)
 
   useEffect(() => {
     if (!Auth.loggedIn()) {
@@ -20,8 +27,49 @@ const Header = () => {
       if (location.pathname === '/') {
         navigate('/home');
       }
+    } if (rainRef.current) {
+      rainRef.current.volume = 0.15;
     }
+    if (pianoRef.current) {
+      pianoRef.current.volume = 0.15;
+    }
+    if (poppyRef.current) {
+      poppyRef.current.volume = 0.15;
+    } 
   }, [navigate, location.pathname]);
+
+  const playRain = () => {
+    if (rainRef.current) {
+      if (!rainRef.current.paused) {
+        rainRef.current.pause();
+      } else {
+        rainRef.current.currentTime = 0; 
+        rainRef.current.play();
+      }
+    }
+  };
+
+  const playPiano = () => {
+    if (pianoRef.current) {
+      if (!pianoRef.current.paused) {
+        pianoRef.current.pause();
+      } else {
+        pianoRef.current.currentTime = 0; 
+        pianoRef.current.play();
+      }
+    }
+  };
+
+  const playPoppy = () => {
+    if (poppyRef.current) {
+      if (!poppyRef.current.paused) {
+        poppyRef.current.pause();
+      } else {
+        poppyRef.current.currentTime = 0; 
+        poppyRef.current.play();
+      }
+    }
+  };
 
   const showAboutModal = () => {
     setIsModalVisible(true);
@@ -94,6 +142,25 @@ const Header = () => {
           </Link>
         </FloatButton.Group>
       </div>
+      <>
+
+      {/* Music Select */}
+      <FloatButton.Group
+      trigger="click"
+      style={{
+        right: 80,
+      }}
+      icon={<CustomerServiceOutlined />}
+    >
+       <FloatButton i
+       con={<RainSvg />} onClick={playRain} />
+       <FloatButton icon={<MoonOutlined />} onClick={playPiano} />
+       <FloatButton icon={<HeatMapOutlined />} onClick={playPoppy} />
+       </FloatButton.Group>
+    <audio ref={rainRef} src={rainSound} hidden></audio>
+    <audio ref={pianoRef} src={pianoSound} hidden></audio>
+    <audio ref={poppyRef} src={poppySound} hidden></audio>
+    </>
 
       {/* Modal for About button */}
       <Modal
