@@ -4,26 +4,9 @@ import { ClockCircleOutlined } from '@ant-design/icons';
 import chimeSound from '../../assets/chime.mp3';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import styled from 'styled-components';
-
+import HomePage from '../Break';
 
 const { Title, Paragraph } = Typography;
-//from jadahs break page 
-const AnimatedBackground = styled.div`
-  background: linear-gradient(45deg, #ff7300, #fc0070, #00bcd4, #00ff99);
-  background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
-  height: 100%; /* Set to the height of the modal content area */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-`;
-
 
 const TimerContent = styled.div`
   position: relative;
@@ -33,8 +16,6 @@ const TimerContent = styled.div`
   height: 100%;
   width: 100%;
 `;
-
-
 
 const CenteredText = styled(Paragraph)`
   position: absolute;
@@ -87,13 +68,6 @@ const Timers = () => {
     setTimerActive(false);
     setControlsVisible(false);
   };
-
-//i dont think we need but not removing yet  -H
-  // const handleShortBreakClick = () => {
-  //   startTimer(5);
-  //   window.location.href = "/break";
-  // };
-
 
   // Convert seconds into MM:SS format
   const formatTime = (time) => {
@@ -154,7 +128,7 @@ const Timers = () => {
    overflowY: 'auto'
  }}
 >
- <AnimatedBackground>
+ <HomePage>
    <TimerContent>
      <CountdownCircleTimer
        key={key}
@@ -176,7 +150,7 @@ const Timers = () => {
        )}
      </CountdownCircleTimer>
    </TimerContent>
- </AnimatedBackground>
+ </HomePage>
 </Modal>
 </>
 );
