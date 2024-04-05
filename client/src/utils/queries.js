@@ -54,3 +54,21 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_TODOS = gql`
+  query todos($profileId: ID!) {
+    todos(profileId: $profileId) {
+      _id
+      text
+      isCompleted
+    }
+  }
+`;
+
+export const QUERY_CURRENT_TASK = gql`
+  query currentTask($profileId: ID!) {
+    currentTask(profileId: $profileId){
+      _id
+      currentTask
+    }
+  }
+`;

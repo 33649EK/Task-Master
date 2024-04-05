@@ -5,7 +5,7 @@ const typeDefs = `
     email: String!
     password: String!
     friends: [Profile]
-    currentTask: Todo
+    currentTask: String
     todos: [Todo]
     projects: [Project]
   }
@@ -33,6 +33,8 @@ const typeDefs = `
     singleProfile(_id: ID!): Profile
     # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
     me: Profile
+    todos(profileId: ID!): [Todo]
+    currentTask(profileId: ID!): String
   }
 
   input AddTodoInput {
