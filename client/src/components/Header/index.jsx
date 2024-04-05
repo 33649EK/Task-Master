@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, FloatButton, Modal } from 'antd';
 import Auth from '../../utils/auth';
-import { InfoCircleOutlined, DollarOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, DollarOutlined, CustomerServiceOutlined, CommentOutlined } from '@ant-design/icons';
+import RainSvg from '../Svg/Rain';
+import rainSound from '../../assets/rain&vibe.mp3'
+
 
 const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
+  const rainRef = useRef(null)
 
   useEffect(() => {
     if (!Auth.loggedIn()) {
@@ -22,6 +26,10 @@ const Header = () => {
       }
     }
   }, [navigate, location.pathname]);
+
+  const playRain = () => {
+    rainRef.current.play();
+  };
 
   const showAboutModal = () => {
     setIsModalVisible(true);
@@ -94,6 +102,36 @@ const Header = () => {
           </Link>
         </FloatButton.Group>
       </div>
+      <>
+
+      {/* Music Select */}
+
+      
+
+    <FloatButton.Group
+      trigger="click"
+      type="primary"
+      style={{
+        right: 24,
+      }}
+      icon={<CustomerServiceOutlined />}
+    >
+      <FloatButton />
+      <FloatButton icon={<CommentOutlined />} />
+    </FloatButton.Group>
+    <FloatButton.Group
+      trigger="hover"
+      type="primary"
+      style={{
+        right: 94,
+      }}
+      icon={<CustomerServiceOutlined />}
+    >
+      <FloatButton />
+      <FloatButton icon={<RainSvg />} onClick={playRain} />
+    </FloatButton.Group>
+    <audio ref={rainRef} src={rainSound} hidden></audio>
+  </>
 
       {/* Modal for About button */}
       <Modal
@@ -120,3 +158,5 @@ Sign up for Task Manager and start optimizing your productivity today! Whether y
 };
 
 export default Header;
+
+
