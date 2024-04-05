@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { List, Checkbox, Modal, Button, Input, Card } from "antd";
 import { useQuery, useMutation } from "@apollo/client";
+import Auth from "../../utils/auth";
 import { QUERY_TODOS } from "../../utils/queries";
 import { ADD_TODO, REMOVE_TODO } from "../../utils/mutations";
 
 const TodoList = () => {
+  const token = Auth.getProfile();
+  console.log(JSON.stringify(token))
   const [todos, setTodos] = useState([
     { id: 1, text: "Feed the cats", isCompleted: false },
     { id: 2, text: "Wash the Dishes", isCompleted: false },
@@ -13,6 +16,12 @@ const TodoList = () => {
   const [visible, setVisible] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
   const [inputValue, setInputValue] = useState("");
+
+
+
+  const { loading, data } = useQuery(QUERY_TODOS, {
+    variables: { profileId: token.data._id },
+  });
 
   const handleAdd = () => {
     if (inputValue.trim() !== "") {
