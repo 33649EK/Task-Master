@@ -44,4 +44,38 @@ export const REMOVE_TODO = gql`
   }
 `;
 
+export const ADD_FRIEND = gql`
+  mutation addFriend($profileId: ID!, $friendId: ID!) {
+    addFriend(profileId: $profileId, friendId: $friendId) {
+      _id
+      name
+      friends {
+        _id
+        name
+      }
+    }
+  }
+`;
 
+export const REMOVE_FRIEND = gql`
+  mutation removeFriend($profileId: ID!, $friendId: ID!) {
+    removeFriend(profileId: $profileId, friendId: $friendId) {
+      _id
+      name
+      friends {
+        _id
+        name
+      }
+    }
+  }
+`;
+
+export const UPDATE_CURRENT_TASK = gql`
+  mutation updateCurrentTask($profileId: ID!, $currentTask: String!) {
+    updateCurrentTask(profileId: $profileId, currentTask: $currentTask) {
+      _id
+      name
+      currentTask
+    }
+  }
+`;
