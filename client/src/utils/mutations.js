@@ -49,7 +49,10 @@ export const ADD_FRIEND = gql`
     addFriend(profileId: $profileId, friendId: $friendId) {
       _id
       name
-      friends
+      friends {
+        _id
+        name
+      }
     }
   }
 `;
@@ -59,7 +62,10 @@ export const REMOVE_FRIEND = gql`
     removeFriend(profileId: $profileId, friendId: $friendId) {
       _id
       name
-      friends
+      friends {
+        _id
+        name
+      }
     }
   }
 `;
