@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { List, Checkbox, Modal, Button, Input, Card } from "antd";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_TODOS } from "../../utils/queries";
-import { ADD_TODO, DELETE_TODO } from "../../utils/mutations";
+import { ADD_TODO, REMOVE_TODO } from "../../utils/mutations";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([
-    { id: 1, text: "Feed the cats", grayedOut: false },
-    { id: 2, text: "Wash the Dishes", grayedOut: false },
-    { id: 3, text: "Do Laundry", grayedOut: false },
+    { id: 1, text: "Feed the cats", isCompleted: false },
+    { id: 2, text: "Wash the Dishes", isCompleted: false },
+    { id: 3, text: "Do Laundry", isCompleted: false },
   ]);
   const [visible, setVisible] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
@@ -19,7 +19,7 @@ const TodoList = () => {
       const newTodo = {
         id: todos.length + 1,
         text: inputValue,
-        grayedOut: false,
+        isCompleted: false,
       };
       setTodos([...todos, newTodo]);
       setInputValue("");
@@ -34,7 +34,7 @@ const TodoList = () => {
 
   const handleKeepOnList = () => {
     const updatedItems = todos.map((todo) =>
-      todo.id === idToDelete ? { ...todo, grayedOut: true } : todo
+      todo.id === idToDelete ? { ...todo, isCompleted: true } : todo
     );
     setTodos(updatedItems);
     setVisible(false);
@@ -73,14 +73,14 @@ const TodoList = () => {
   renderItem={(item) => (
     <List.Item
       style={{
-        backgroundColor: item.grayedOut ? '#f0f0f0' : (item.checked ? '#f4bd96' : 'transparent')
+        backgroundColor: item.isCompleted ? '#f0f0f0' : (item.checked ? '#f4bd96' : 'transparent')
       }}
     >
       <Checkbox
         onChange={() => handleCheckboxChange(item.id)}
-        style={{ textDecoration: item.grayedOut ? 'line-through' : 'none', color: '#615a58' }}
+        style={{ textDecoration: item.isCompleted ? 'line-through' : 'none', color: '#615a58' }}
         className="checkbox"
-        checked={item.grayedOut}
+        checked={item.isCompleted}
       >
         {item.text}
       </Checkbox>
