@@ -8,9 +8,10 @@ const Footer = () => {
       <div className="container text-center mb-5">
         {location.pathname !== '/' && (
           <button
-            className="btn btn-dark mb-3"
-            onClick={() => navigate(-1)}
-          >
+          className="btn btn-dark mb-3"
+          onClick={() => navigate(-1)}
+          style={{ backgroundColor: '#92B6B1', color: 'white', border: 'none' }}
+        >
             &larr; Go Back
           </button>
         )}

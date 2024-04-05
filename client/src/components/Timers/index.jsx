@@ -1,6 +1,7 @@
+// Existing imports...
 import React, { useState, useEffect, useRef } from 'react';
 import { Input, Button, Card, Typography, Divider, Modal, message } from 'antd';
-import { ClockCircleOutlined } from '@ant-design/icons';
+import { ClockCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import chimeSound from '../../assets/chime.mp3';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import styled from 'styled-components';
@@ -51,12 +52,30 @@ const CenteredText = styled(Paragraph)`
   z-index: 10;
 `;
 
+const DeleteButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -12px;
+`;
+
+const SmallButton = styled(Button)`
+  border-radius: 50%;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Timers = () => {
   const [isBreakModalVisible, setIsBreakModalVisible] = useState(false);
   const [key, setKey] = useState(0); 
   const [timeLeft, setTimeLeft] = useState(0); 
   const [timerActive, setTimerActive] = useState(false);
   const [controlsVisible, setControlsVisible] = useState(false);
+  const [currentTask, setCurrentTask] = useState('');
+  const [displayedTask, setDisplayedTask] = useState('');
   const chimeRef = useRef(null);
 
   const showBreakModal = (duration) => {
@@ -70,7 +89,6 @@ const Timers = () => {
     setKey(prevKey => prevKey + 1); 
     message.info("Break is over, back to work!");
   };
-
 
   // Start the timer with specific minutes
   const startTimer = (duration) => {
@@ -89,6 +107,11 @@ const Timers = () => {
     setTimeLeft(0);
     setTimerActive(false);
     setControlsVisible(false);
+  };
+
+  // Delete the task
+  const deleteTask = () => {
+    setDisplayedTask('');
   };
 
   // Convert seconds into MM:SS format
@@ -113,69 +136,90 @@ const Timers = () => {
     return () => clearInterval(interval); 
   }, [timerActive, timeLeft]);
 
+  const handleInputEnter = () => {
+    setDisplayedTask(currentTask);
+    setCurrentTask('');
+  };
+
   return (
     <>
-    <Card className="timer-container">
-      <Title level={2} style={{ textAlign: 'center', fontSize:'24px', color:'#615a58' }}>Timer</Title>
-      <Divider />
-      <Input placeholder="Current task" style={{ marginBottom: '10px' }} />
-      <ClockCircleOutlined style={{ fontSize: '50px', color:'#615a58', display: 'block', margin: 'auto' }} />
-      <Title level={3} style={{ textAlign: 'center', color:'#615a58' }}>{formatTime(timeLeft)}</Title>
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <Button className="timer-button" onClick={() => startTimer(25)}>25 min</Button>
-        <Button className="timer-button" onClick={() => startTimer(50)}>50 min</Button>
-        <Button className="timer-button short-break" onClick={() => showBreakModal(5)}>Short break</Button>
-        <Button className="timer-button long-break" onClick={() => showBreakModal(10)}>Long break</Button>
-        <audio ref={chimeRef} src={chimeSound} preload="auto"></audio>
-        {controlsVisible && (
-          <>
-            <Button className="timer-button" onClick={togglePause}>{timerActive ? 'Pause' : 'Resume'}</Button>
-            <Button className="timer-button" onClick={resetTimer}>Reset</Button>
-          </>
-        )}
-      </div>
-    </Card>
-     {/* Modal for Long Break Timer */}
-  <Modal
-    title={<div style={{ textAlign: 'center', fontSize: '26px', color: '#615a58' }}>Great work! Time for a long break!</div>}
-    visible={isBreakModalVisible}
-    footer={null}
-    onCancel={() => setIsBreakModalVisible(false)}
-    centered
-    style={{ top: 0 }}
-    width="100vw"
-    height="100vh"
-    bodyStyle={{
-      height: '100vh',
-      overflowY: 'auto'
-    }}
-  >
-    <AnimatedBackground>
-      <TimerContent>
-        <CountdownCircleTimer
-          key={key}
-          isPlaying={isBreakModalVisible}
-          duration={timeLeft}
-          colors={[['#00a2ae']]}
-          onComplete={handleBreakTimerComplete}
-          size={350} // timer size
-        >
-          {({ remainingTime }) => (
+      <Card className="timer-container">
+        <Title level={2} style={{ textAlign: 'center', fontSize:'24px', color:'#615a58' }}>Timer</Title>
+        <Divider />
+        <div style={{ position: 'relative' }}>
+          <Paragraph style={{ textAlign: 'center', color:'#615a58', fontSize: '18px', marginBottom: '10px', fontSize: '24px' }}>{displayedTask}</Paragraph>
+          {displayedTask && (
+            <DeleteButtonContainer>
+              <SmallButton type="primary" danger onClick={deleteTask}>
+                <DeleteOutlined />
+              </SmallButton>
+            </DeleteButtonContainer>
+          )}
+        </div>
+        <ClockCircleOutlined style={{ fontSize: '150px', color:'#615a58', display: 'block', margin: 'auto' }} />
+        <Title level={3} style={{ textAlign: 'center', color:'#615a58' }}>{formatTime(timeLeft)}</Title>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <Input 
+            placeholder="Enter current task" 
+            value={currentTask} 
+            onChange={(e) => setCurrentTask(e.target.value)} 
+            onPressEnter={handleInputEnter}
+            style={{ display: displayedTask ? 'none' : 'block' }}
+          />
+          <Button className="timer-button" onClick={() => startTimer(25)}>25 min</Button>
+          <Button className="timer-button" onClick={() => startTimer(50)}>50 min</Button>
+          <Button className="timer-button short-break" onClick={() => showBreakModal(5)}>Short break</Button>
+          <Button className="timer-button long-break" onClick={() => showBreakModal(10)}>Long break</Button>
+          <audio ref={chimeRef} src={chimeSound} preload="auto"></audio>
+          {controlsVisible && (
             <>
-              <Title style={{ position: 'absolute', color: '#dcdfdd', top: '65%' }}>
-                {formatTime(remainingTime)}
-              </Title>
-              <CenteredText style={{ position: 'absolute', fontWeight: '600', color: 'white', top: '25%' }}>
-                Breathe In, Breathe Out
-              </CenteredText>
+              <Button className="timer-button" onClick={togglePause}>{timerActive ? 'Pause' : 'Resume'}</Button>
+              <Button className="timer-button" onClick={resetTimer}>Reset</Button>
             </>
           )}
-        </CountdownCircleTimer>
-      </TimerContent>
-    </AnimatedBackground>
-  </Modal>
-</>
-);
+        </div>
+      </Card>
+      {/* Modal for Long Break Timer */}
+      <Modal
+        title={<div style={{ textAlign: 'center', fontSize: '26px', color: '#615a58' }}>Great work! Time for a long break!</div>}
+        visible={isBreakModalVisible}
+        footer={null}
+        onCancel={() => setIsBreakModalVisible(false)}
+        centered
+        style={{ top: 0 }}
+        width="100vw"
+        height="100vh"
+        bodyStyle={{
+          height: '100vh',
+          overflowY: 'auto'
+        }}
+      >
+        <AnimatedBackground>
+          <TimerContent>
+            <CountdownCircleTimer
+              key={key}
+              isPlaying={isBreakModalVisible}
+              duration={timeLeft}
+              colors={[['#00a2ae']]}
+              onComplete={handleBreakTimerComplete}
+              size={550} // timer size
+            >
+              {({ remainingTime }) => (
+                <>
+                  <Title style={{ position: 'absolute', color: '#dcdfdd', top: '65%' }}>
+                    {formatTime(remainingTime)}
+                  </Title>
+                  <CenteredText style={{ position: 'absolute', fontWeight: '600', color: 'white', top: '25%' }}>
+                    Breathe In, Breathe Out
+                  </CenteredText>
+                </>
+              )}
+            </CountdownCircleTimer>
+          </TimerContent>
+        </AnimatedBackground>
+      </Modal>
+    </>
+  );
 };
 
 export default Timers;
