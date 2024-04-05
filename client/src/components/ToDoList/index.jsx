@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { List, Checkbox, Modal, Button, Input, Card } from "antd";
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_TODOS } from "../../utils/queries";
+import { ADD_TODO, DELETE_TODO } from "../../utils/mutations";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([
