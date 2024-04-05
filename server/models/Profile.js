@@ -25,8 +25,7 @@ const profileSchema = new Schema({
     ref: 'Profile',
   }],
   currentTask: {
-    type: Schema.Types.ObjectId,
-    ref: 'Todo',
+    type: String,
   },
   todos: [todoSchema],
   projects: [
