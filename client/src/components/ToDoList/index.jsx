@@ -50,7 +50,7 @@ const TodoList = () => {
     <div
       className="todo-list-container"
       style={{
-        backgroundColor: "#f4bd96",
+        backgroundColor: "#E8DDB5",
         minHeight: "100vh",
         padding: "20px",
       }}
