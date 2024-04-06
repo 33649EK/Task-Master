@@ -3,30 +3,36 @@ import { List, Checkbox, Modal, Button, Input, Card } from 'antd';
 import { useQuery, useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { QUERY_TODOS } from '../../utils/queries';
-import { ADD_TODO, REMOVE_TODO } from '../../utils/mutations';
+import { ADD_TODO, REMOVE_TODO, SET_COMPLETED } from '../../utils/mutations';
 
 const TodoList = () => {
   const token = Auth.getProfile();
 
-  const [todos, setTodos] = useState([]);
-
+  const [todos, setTodos] = useState();
+  const [, forceUpdate] = useState(); // used to force a re-render when the todos array changes
   const [visible, setVisible] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
   const [inputValue, setInputValue] = useState('');
 
   const { loading, data } = useQuery(QUERY_TODOS, {
     variables: { profileId: token.data._id },
-  })
+  });
   const [addTodo] = useMutation(ADD_TODO);
   const [removeTodo] = useMutation(REMOVE_TODO);
+  const [setCompleted] = useMutation(SET_COMPLETED);
 
   useEffect(() => {
     if (!loading && data) {
       setTodos(data.todos);
-      console.log(`Data: ${JSON.stringify(todos)}`);``
+      // console.log(`Data: ${JSON.stringify(todos)}`);
+      ``;
     }
   }, [data, loading]);
 
+  useEffect(() => {
+    // force a re-render when the todos array changes
+    forceUpdate(n => !n);
+  }, [todos]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -34,28 +40,32 @@ const TodoList = () => {
     return <div>Error!</div>;
   }
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!inputValue) {
       return;
     }
-    console.log(`Id: ${token.data._id}, Todo: ${inputValue}`)
-    const { data, error } = addTodo({
-      variables: { profileId: token.data._id, todo: inputValue},
+    console.log(`Id: ${token.data._id}, Todo: ${inputValue}`);
+    const { data: addedData } = await addTodo({
+      variables: { profileId: token.data._id, todo: inputValue },
     });
 
-    console.log(`Added: ${data}`);
-
+    console.log(`Added: ${JSON.stringify(addedData.addTodo)}`);
     setInputValue('');
+    setTodos([...addedData.addTodo.todos]);
+    
+
+    
   };
 
-  const handleDelete = () => {
-    const { data } = removeTodo({
+  const handleDelete = async () => {
+    const { data } = await removeTodo({
       variables: { _id: idToDelete },
     });
     console.log(`Deleted: ${data}`);
     setVisible(false);
   };
 
+  // need to update the todo item to isCompleted: true
   const handleKeepOnList = () => {
     // const updatedItems = todos.map((todo) =>
     //   todo.id === idToDelete ? { ...todo, isCompleted: true } : todo
@@ -93,9 +103,9 @@ const TodoList = () => {
         />
       </div>
       <List
-        dataSource={data.todos}
+        dataSource={todos}
         renderItem={
-          data.todos.length > 0 ? (
+          todos ? (
             (item) => (
               <List.Item
                 key={item.id}

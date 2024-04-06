@@ -83,3 +83,17 @@ export const UPDATE_CURRENT_TASK = gql`
     }
   }
 `;
+
+export const SET_COMPLETED = gql`
+  mutation setCompleted($profileId: ID!, $todoId: ID!) {
+    setCompleted(profileId: $profileId, todoId: $todoId) {
+      _id
+      name
+      todos {
+        _id
+        text
+        isCompleted
+      }
+    }
+  }
+`;

@@ -67,8 +67,8 @@ const resolvers = {
     addTodo: async (parent, { profileId, todo }, context) => {
       // If context has a `user` property, that means the user executing this
       // mutation has a valid JWT and is logged in
-      
-      return Profile.findOneAndUpdate(
+      console.log('Function is firing!');
+      const newTodo = await Profile.findOneAndUpdate(
         { _id: profileId },
         {
           $addToSet: { todos: { text: todo } },
@@ -78,10 +78,7 @@ const resolvers = {
           runValidators: true,
         }
       );
-
-      // If user attempts to execute this mutation and isn't logged in,
-      // throw an error
-      throw AuthenticationError;
+      return newTodo;
     },
     // Set up mutation so a logged in user can only remove their profile and
     // no one else's
@@ -165,6 +162,17 @@ const resolvers = {
         return Profile.findOneAndUpdate(
           { _id: profileId },
           { currentTask: currentTask },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    setCompleted: async (parent, { profileId, todoId }, context) => {
+      if (context.user) {
+        return Profile.findOneAndUpdate(
+          { _id: profileId, 'todos._id': todoId },
+          { 'todos.$.isCompleted': true },
           { new: true }
         );
       }
