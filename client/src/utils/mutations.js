@@ -17,7 +17,11 @@ export const ADD_TODO = gql`
     addTodo(profileId: $profileId, todo: $todo) {
       _id
       name
-      todos
+      todos {
+        _id
+        text
+        isCompleted
+      }
     }
   }
 `;
@@ -35,11 +39,15 @@ export const LOGIN_USER = gql`
 `;
 
 export const REMOVE_TODO = gql`
-  mutation removeTodo($_id: ID!) {
-    removeTodo(_id: $_id) {
+  mutation removeTodo($profileId: ID!, $todoId: ID!) {
+    removeTodo(profileId: $profileId, todoId: $todoId) {
       _id
       name
-      todos
+      todos {
+        _id
+        text
+        isCompleted
+      }
     }
   }
 `;
@@ -76,6 +84,20 @@ export const UPDATE_CURRENT_TASK = gql`
       _id
       name
       currentTask
+    }
+  }
+`;
+
+export const SET_COMPLETED = gql`
+  mutation setCompleted($profileId: ID!, $todoId: ID!) {
+    setCompleted(profileId: $profileId, todoId: $todoId) {
+      _id
+      name
+      todos {
+        _id
+        text
+        isCompleted
+      }
     }
   }
 `;

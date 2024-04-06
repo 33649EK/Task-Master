@@ -39,7 +39,7 @@ const typeDefs = `
 
   input AddTodoInput {
     text: String!
-    isCompleted: Boolean = false
+    isCompleted: Boolean
   }
 
   type Mutation {
@@ -49,9 +49,10 @@ const typeDefs = `
   }
 
   extend type Mutation {
-    addTodo(profileId: ID!, todos: AddTodoInput!): Profile
-    removeTodo(todos: String!): Profile
+    addTodo(profileId: ID!, todo: String!): Profile
+    removeTodo(profileId: ID!, todoId: ID!): Profile
     updateCurrentTask(profileId: ID!, currentTask: String!): Profile
+    setCompleted(profileId: ID!, todoId: ID!): Profile
   }
 
   extend type Mutation {
