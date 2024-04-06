@@ -217,7 +217,7 @@ const Timers = () => {
           <div
             style={{ textAlign: "center", fontSize: "26px", color: "#615a58" }}
           >
-            Great work! Time for a long break!
+            Great work! Time for a break!
           </div>
         }
         visible={isBreakModalVisible}
