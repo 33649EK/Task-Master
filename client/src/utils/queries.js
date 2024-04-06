@@ -23,6 +23,7 @@ export const QUERY_SINGLE_PROFILE = gql`
     singleProfile(_id: $_id) {
       _id
       name
+      email
       friends {
         _id
         name
