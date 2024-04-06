@@ -1,43 +1,66 @@
-import React, { useState } from "react";
-import { List, Checkbox, Modal, Button, Input, Card } from "antd";
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_TODOS } from "../../utils/queries";
-import { ADD_TODO, REMOVE_TODO } from "../../utils/mutations";
+import React, { useEffect, useState } from 'react';
+import { List, Checkbox, Modal, Button, Input, Card } from 'antd';
+import { useQuery, useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
+import { QUERY_TODOS } from '../../utils/queries';
+import { ADD_TODO, REMOVE_TODO, SET_COMPLETED } from '../../utils/mutations';
 
 const TodoList = () => {
-  const [todos, setTodos] = useState([
-    { id: 1, text: "Practice MongoDB", grayedOut: false },
-    { id: 2, text: "10 Algorithm Problems", grayedOut: false },
-    { id: 3, text: "React Homework", grayedOut: false },
-  ]);
+  const token = Auth.getProfile();
+
+  const [todos, setTodos] = useState();
+  const [, forceUpdate] = useState(); // used to force a re-render when the todos array changes
   const [visible, setVisible] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
-  const handleAdd = () => {
-    if (inputValue.trim() !== "") {
-      const newTodo = {
-        id: todos.length + 1,
-        text: inputValue,
-        grayedOut: false,
-      };
-      setTodos([...todos, newTodo]);
-      setInputValue("");
+  const { loading, data } = useQuery(QUERY_TODOS, {
+    variables: { profileId: token.data._id },
+  });
+  const [addTodo] = useMutation(ADD_TODO);
+  const [removeTodo] = useMutation(REMOVE_TODO);
+  const [setCompleted] = useMutation(SET_COMPLETED);
+
+  useEffect(() => {
+    if (!loading && data) {
+      setTodos(data.todos);
     }
+  }, [data, loading]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  } else if (!data) {
+    return <div>Error!</div>;
+  }
+
+  const handleAdd = async () => {
+    if (!inputValue) {
+      return;
+    }
+    console.log(`Id: ${token.data._id}, Todo: ${inputValue}`);
+    const { data: addedData } = await addTodo({
+      variables: { profileId: token.data._id, todo: inputValue },
+    });
+    setInputValue('');
+    setTodos([...addedData.addTodo.todos]);
   };
 
-  const handleDelete = () => {
-    const updatedTodos = todos.filter((todo) => todo.id !== idToDelete);
-    setTodos(updatedTodos);
+  const handleDelete = async () => {
+    const { data } = await removeTodo({
+      variables: { profileId: token.data._id, todoId: idToDelete },
+    });
+
     setVisible(false);
+    setTodos([...data.removeTodo.todos]);
   };
 
-  const handleKeepOnList = () => {
-    const updatedItems = todos.map((todo) =>
-      todo.id === idToDelete ? { ...todo, grayedOut: true } : todo
-    );
-    setTodos(updatedItems);
+  // need to update the todo item to isCompleted: true
+  const handleKeepOnList = async () => {
+    const { data } = await setCompleted({
+      variables: { profileId: token.data._id, todoId: idToDelete },
+    });
     setVisible(false);
+    setTodos([...data.setCompleted.todos]);
   };
 
   const handleCancel = () => {
@@ -53,9 +76,9 @@ const TodoList = () => {
     <div
       className="todo-list-container"
       style={{
-        backgroundColor: "#E8DDB5",
-        minHeight: "100vh",
-        padding: "20px",
+        backgroundColor: '#E8DDB5',
+        minHeight: '100vh',
+        padding: '20px',
       }}
     >
       <p></p>
@@ -69,32 +92,50 @@ const TodoList = () => {
         />
       </div>
       <List
-  dataSource={todos}
-  renderItem={(item) => (
-    <List.Item
-      style={{
-        backgroundColor: item.grayedOut ? '#f0f0f0' : (item.checked ? '#f4bd96' : 'transparent')
-      }}
-    >
-      <Checkbox
-        onChange={() => handleCheckboxChange(item.id)}
-        style={{ textDecoration: item.grayedOut ? 'line-through' : 'none', color: '#615a58' }}
-        className="checkbox"
-        checked={item.grayedOut}
-      >
-        {item.text}
-      </Checkbox>
-    </List.Item>
-  )}
-  className="list"
-/>
-
+        dataSource={todos}
+        renderItem={
+          todos ? (
+            (item) => (
+              <List.Item
+                key={item._id}
+                style={{
+                  backgroundColor: item.isCompleted
+                    ? '#f0f0f0'
+                    : item.checked
+                    ? '#f4bd96'
+                    : 'transparent',
+                }}
+              >
+                <Checkbox
+                  onChange={() => handleCheckboxChange(item._id)}
+                  style={{
+                    textDecoration: item.isCompleted ? 'line-through' : 'none',
+                    color: '#615a58',
+                  }}
+                  className="checkbox"
+                  checked={item.isCompleted}
+                >
+                  {item.text}
+                </Checkbox>
+              </List.Item>
+            )
+          ) : (
+            <Card
+              title="Welcome to your To-Do List"
+              style={{ width: '100%', textAlign: 'center' }}
+            >
+              <p>Click the input field above to add a new item to your list.</p>
+            </Card>
+          )
+        }
+        className="list"
+      />
 
       <Modal
         visible={visible}
         onCancel={handleCancel}
         footer={[
-          <div style={{ textAlign: "center" }}>
+          <div key="footerButtons" style={{ textAlign: 'center' }}>
             <Button
               key="keepOnList"
               onClick={handleKeepOnList}
@@ -102,7 +143,6 @@ const TodoList = () => {
             >
               Keep on List
             </Button>
-            ,
             <Button
               key="delete"
               type="danger"
@@ -111,12 +151,11 @@ const TodoList = () => {
             >
               Delete
             </Button>
-            ,
           </div>,
         ]}
         className="modal"
       >
-        <p style={{ textAlign: "center" }}>Do you want to delete this item?</p>
+        <p style={{ textAlign: 'center' }}>Do you want to delete this item?</p>
       </Modal>
     </div>
   );
