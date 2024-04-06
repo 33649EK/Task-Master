@@ -90,15 +90,14 @@ const resolvers = {
     },
     // Make it so a logged in user can only remove a skill from their own
     // profile
-    removeTodo: async (parent, { todo }, context) => {
-      if (context.user) {
-        return Profile.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { todos: todo } },
-          { new: true }
-        );
-      }
-      throw AuthenticationError;
+    removeTodo: async (parent, { profileId, todoId }) => {
+      const newProfile = await Profile.findOneAndUpdate(
+        { _id: profileId },
+        { $pull: { todos: { _id: todoId } } },
+        { new: true }
+      );
+      return newProfile;
+
     },
 
     addFriend: async (parent, { profileId, friendName }, context) => {

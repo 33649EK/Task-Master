@@ -25,13 +25,12 @@ const TodoList = () => {
     if (!loading && data) {
       setTodos(data.todos);
       // console.log(`Data: ${JSON.stringify(todos)}`);
-      ``;
     }
   }, [data, loading]);
 
   useEffect(() => {
     // force a re-render when the todos array changes
-    forceUpdate(n => !n);
+    forceUpdate((n) => !n);
   }, [todos]);
 
   if (loading) {
@@ -49,29 +48,29 @@ const TodoList = () => {
       variables: { profileId: token.data._id, todo: inputValue },
     });
 
-    console.log(`Added: ${JSON.stringify(addedData.addTodo)}`);
+    // console.log(`Added: ${JSON.stringify(addedData.addTodo)}`);
     setInputValue('');
     setTodos([...addedData.addTodo.todos]);
-    
-
-    
   };
 
   const handleDelete = async () => {
+    console.log(`Deleting: ${idToDelete}`);
+    console.log(`Token: ${token.data._id}`);
     const { data } = await removeTodo({
-      variables: { _id: idToDelete },
+      variables: { profileId: token.data._id, todoId: idToDelete },
     });
-    console.log(`Deleted: ${data}`);
+    console.log(`Deleted: ${data.removeTodo}`);
     setVisible(false);
+    setTodos([...data.removeTodo.todos]);
   };
 
   // need to update the todo item to isCompleted: true
   const handleKeepOnList = () => {
-    // const updatedItems = todos.map((todo) =>
-    //   todo.id === idToDelete ? { ...todo, isCompleted: true } : todo
-    // );
-    // setTodos(updatedItems);
-    // setVisible(false);
+    const updatedItems = todos.map((todo) =>
+      todo.id === idToDelete ? { ...todo, isCompleted: true } : todo
+    );
+    setTodos(updatedItems);
+    setVisible(false);
   };
 
   const handleCancel = () => {
@@ -79,7 +78,9 @@ const TodoList = () => {
   };
 
   const handleCheckboxChange = (id) => {
+    console.log(`Setting completed: ${id}`);
     setIdToDelete(id);
+
     setVisible(true);
   };
 
@@ -108,7 +109,7 @@ const TodoList = () => {
           todos ? (
             (item) => (
               <List.Item
-                key={item.id}
+                key={item._id}
                 style={{
                   backgroundColor: item.isCompleted
                     ? '#f0f0f0'
@@ -118,7 +119,7 @@ const TodoList = () => {
                 }}
               >
                 <Checkbox
-                  onChange={() => handleCheckboxChange(item.id)}
+                  onChange={() => handleCheckboxChange(item._id)}
                   style={{
                     textDecoration: item.isCompleted ? 'line-through' : 'none',
                     color: '#615a58',

@@ -50,7 +50,7 @@ const typeDefs = `
 
   extend type Mutation {
     addTodo(profileId: ID!, todo: String!): Profile
-    removeTodo(todos: String!): Profile
+    removeTodo(profileId: ID!, todoId: ID!): Profile
     updateCurrentTask(profileId: ID!, currentTask: String!): Profile
     setCompleted(profileId: ID!, todoId: ID!): Profile
   }

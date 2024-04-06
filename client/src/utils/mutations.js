@@ -39,11 +39,15 @@ export const LOGIN_USER = gql`
 `;
 
 export const REMOVE_TODO = gql`
-  mutation removeTodo($_id: ID!) {
-    removeTodo(_id: $_id) {
+  mutation removeTodo($profileId: ID!, $todoId: ID!) {
+    removeTodo(profileId: $profileId, todoId: $todoId) {
       _id
       name
-      todos
+      todos {
+        _id
+        text
+        isCompleted
+      }
     }
   }
 `;
