@@ -152,6 +152,7 @@ const Header = () => {
         right: 80,
       }}
       icon={<CustomerServiceOutlined />}
+      tooltip="Calming Sounds"
     >
 
       <FloatButton icon={<RainSvg />} onClick={playRain} />
