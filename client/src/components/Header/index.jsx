@@ -97,7 +97,7 @@ const Header = () => {
             <h1 className="header-title m-0">TaskMaster</h1>
           </Link>
           <p className="header-description m-0">
-            Use your time better or something.
+            Time to get organized!
           </p>
         </div>
 
@@ -166,22 +166,17 @@ const Header = () => {
 
       {/* Modal for About button */}
       <Modal
-        title="About Task Manager"
+        title="About Task Master"
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
-        style={{ fontSize: '24px' }}
+        style={{ fontSize: '25px', textAlign:'center' }}
       >
         <p>
-Task Manager is your go-to platform for efficient task management and productivity enhancement. Our mission is to provide intuitive tools that help individuals and teams stay organized, focused, and productive.<br />
+Struggling to stay on top of your to do lists? Having a difficult time focusing? <strong>Let us help!</strong><br />
+<p></p>
+Task Master is your new go-to app for keeping track of everything you need to do, and maintaining focus so you can crush your to do list with ease! 
 
-<strong>Task Tracking:</strong> Easily manage your tasks and deadlines with our intuitive task tracking system.<br />
-<strong>Time Management:</strong> Take control of your time with our built-in timer feature.<br />
-<strong>Break Meditation:</strong> Recharge and refocus with guided meditation sessions on our break meditation screen.<br />
-<strong>To-Do List:</strong> Stay organized with our customizable to-do list.<br />
-<strong>Secure Access:</strong> Enjoy peace of mind with our secure login/logout functionality.<br />
-<strong>Get Started Today!</strong><br />
-Sign up for Task Manager and start optimizing your productivity today! Whether you're a student, professional, or entrepreneur, Task Manager has everything you need to succeed.
         </p>
       </Modal>
     </>

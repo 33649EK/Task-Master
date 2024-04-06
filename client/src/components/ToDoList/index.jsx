@@ -81,7 +81,8 @@ const TodoList = () => {
         padding: '20px',
       }}
     >
-      <p></p>
+     {/* Title for the To-Do List */}
+     <h2 style={{ textAlign: "center", fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'", fontSize: "24px", fontWeight: 600, color: "#615a58" }}>To Do List</h2>
       <div className="input-container">
         <Input
           placeholder="Add new item"
