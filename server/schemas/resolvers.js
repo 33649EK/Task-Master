@@ -18,7 +18,7 @@ const resolvers = {
     },
     // By adding context to our query, we can retrieve the logged
     // in user without specifically searching for them
-    me: async (parent, args, context) => {
+    me: async (parent, args) => {
       if (context.user) {
         return Profile.findOne({ _id: context.user._id });
       }
@@ -64,7 +64,7 @@ const resolvers = {
     },
 
     // Add a third argument to the resolver to access data in our `context`
-    addTodo: async (parent, { profileId, todo }, context) => {
+    addTodo: async (parent, { profileId, todo }) => {
       // If context has a `user` property, that means the user executing this
       // mutation has a valid JWT and is logged in
       console.log('Function is firing!');
@@ -82,7 +82,7 @@ const resolvers = {
     },
     // Set up mutation so a logged in user can only remove their profile and
     // no one else's
-    removeProfile: async (parent, args, context) => {
+    removeProfile: async (parent, args) => {
       if (context.user) {
         return Profile.findOneAndDelete({ _id: context.user._id });
       }
@@ -100,7 +100,7 @@ const resolvers = {
 
     },
 
-    addFriend: async (parent, { profileId, friendName }, context) => {
+    addFriend: async (parent, { profileId, friendName }) => {
       if (context.user) {
         // Find the friend's profile based on provided name
         const friend = await Profile.findOne({ name: friendName });
@@ -129,7 +129,7 @@ const resolvers = {
       }
     },
 
-    removeFriend: async (parent, { profileId, friendName }, context) => {
+    removeFriend: async (parent, { profileId, friendName }) => {
       if (context.user) {
         // Find the friend's profile based on provided name
         const friend = await Profile.findOne({ name: friendName });
@@ -156,7 +156,7 @@ const resolvers = {
       }
     },
 
-    updateCurrentTask: async (parent, { profileId, currentTask }, context) => {
+    updateCurrentTask: async (parent, { profileId, currentTask }) => {
       if (context.user) {
         return Profile.findOneAndUpdate(
           { _id: profileId },
@@ -167,15 +167,12 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    setCompleted: async (parent, { profileId, todoId }, context) => {
-      if (context.user) {
+    setCompleted: async (parent, { profileId, todoId }) => {
         return Profile.findOneAndUpdate(
           { _id: profileId, 'todos._id': todoId },
           { 'todos.$.isCompleted': true },
           { new: true }
         );
-      }
-      throw new AuthenticationError('You need to be logged in!');
     },
   },
 };

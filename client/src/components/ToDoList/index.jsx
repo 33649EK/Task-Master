@@ -24,14 +24,8 @@ const TodoList = () => {
   useEffect(() => {
     if (!loading && data) {
       setTodos(data.todos);
-      // console.log(`Data: ${JSON.stringify(todos)}`);
     }
   }, [data, loading]);
-
-  useEffect(() => {
-    // force a re-render when the todos array changes
-    forceUpdate((n) => !n);
-  }, [todos]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -47,30 +41,26 @@ const TodoList = () => {
     const { data: addedData } = await addTodo({
       variables: { profileId: token.data._id, todo: inputValue },
     });
-
-    // console.log(`Added: ${JSON.stringify(addedData.addTodo)}`);
     setInputValue('');
     setTodos([...addedData.addTodo.todos]);
   };
 
   const handleDelete = async () => {
-    console.log(`Deleting: ${idToDelete}`);
-    console.log(`Token: ${token.data._id}`);
     const { data } = await removeTodo({
       variables: { profileId: token.data._id, todoId: idToDelete },
     });
-    console.log(`Deleted: ${data.removeTodo}`);
+
     setVisible(false);
     setTodos([...data.removeTodo.todos]);
   };
 
   // need to update the todo item to isCompleted: true
-  const handleKeepOnList = () => {
-    const updatedItems = todos.map((todo) =>
-      todo.id === idToDelete ? { ...todo, isCompleted: true } : todo
-    );
-    setTodos(updatedItems);
+  const handleKeepOnList = async () => {
+    const { data } = await setCompleted({
+      variables: { profileId: token.data._id, todoId: idToDelete },
+    });
     setVisible(false);
+    setTodos([...data.setCompleted.todos]);
   };
 
   const handleCancel = () => {
@@ -78,9 +68,7 @@ const TodoList = () => {
   };
 
   const handleCheckboxChange = (id) => {
-    console.log(`Setting completed: ${id}`);
     setIdToDelete(id);
-
     setVisible(true);
   };
 
@@ -147,7 +135,7 @@ const TodoList = () => {
         visible={visible}
         onCancel={handleCancel}
         footer={[
-          <div style={{ textAlign: 'center' }}>
+          <div key="footerButtons" style={{ textAlign: 'center' }}>
             <Button
               key="keepOnList"
               onClick={handleKeepOnList}
@@ -155,7 +143,6 @@ const TodoList = () => {
             >
               Keep on List
             </Button>
-            ,
             <Button
               key="delete"
               type="danger"
@@ -164,7 +151,6 @@ const TodoList = () => {
             >
               Delete
             </Button>
-            ,
           </div>,
         ]}
         className="modal"
