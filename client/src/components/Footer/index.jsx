@@ -8,6 +8,7 @@ const Footer = () => {
       <div className="container text-center mb-5">
         {location.pathname !== '/' && (
           <button
+
             className="custom-footer-button"
             onClick={() => navigate(-1)}
           >

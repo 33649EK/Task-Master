@@ -26,7 +26,7 @@ const Profile = () => {
 
   if (!isLoggedIn || !profile?.name) {
     return (
-      <h4>
+      <h4 style={{ color: 'var(--darkestblue)' }}>
         You need to be logged in to see your profile page. Use the navigation
         links above to sign up or log in!
       </h4>
@@ -36,18 +36,18 @@ const Profile = () => {
   return (
     <Layout>
       <Content style={{ padding: "24px" }}>
-        <Card title="Time Spent" style={{ marginBottom: "24px" }}>
-          <Title level={2}>{profile.timeSpent}</Title>
-          <Paragraph>Time spent on the platform</Paragraph>
+        <Card title="Time Spent" style={{ marginBottom: "24px", backgroundColor: 'var(--lightblue)', color: 'var(--white)' }}>
+          <Title level={2} style={{ color: 'var(--dark)' }}>{profile.timeSpent}</Title>
+          <Paragraph style={{ color: 'var(--dark)' }}>Time spent on the platform</Paragraph>
         </Card>
-        <Card title="Profile Information">
-          <Paragraph>
+        <Card title="Profile Information" style={{ backgroundColor: 'var(--purple)', color: 'var(--white)' }}>
+          <Paragraph style={{ color: 'var(--dark)' }}>
             <strong>Name:</strong> {profile.name}
           </Paragraph>
-          <Paragraph>
+          <Paragraph style={{ color: 'var(--dark)' }}>
             <strong>Email:</strong> {profile.email}
           </Paragraph>
-          <Paragraph>
+          <Paragraph style={{ color: 'var(--dark)' }}>
             <strong>Friends:</strong> {profile.friends._id}
           </Paragraph>
         </Card>
@@ -57,4 +57,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
