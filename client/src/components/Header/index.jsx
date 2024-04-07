@@ -85,6 +85,7 @@ const Header = () => {
   };
 
   const logout = (event) => {
+    navigate('/');
     event.preventDefault();
     Auth.logout();
   };
