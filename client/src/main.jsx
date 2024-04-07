@@ -8,7 +8,7 @@ import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import ErrorPage from './pages/ErrorPage';
-import FriendsTest from './pages/friendsTest.jsx';
+import FriendsTest from './pages/FriendsTest';
 import LandingPage from './pages/LandingPage'; 
 
 
