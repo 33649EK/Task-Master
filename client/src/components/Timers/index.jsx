@@ -1,12 +1,15 @@
-// Existing imports...
 import React, { useState, useEffect, useRef } from "react";
-import { Input, Button, Card, Typography, Divider, Modal, message } from "antd";
+import { Button, Card, Typography, Divider, Modal, message, Select } from "antd";
 import { ClockCircleOutlined, DeleteOutlined } from "@ant-design/icons";
 import chimeSound from "../../assets/chime.mp3";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import styled from "styled-components";
+import { useQuery } from '@apollo/client';
+import { QUERY_TODOS } from '../../utils/queries'; 
+import Auth from '../../utils/auth';
 
 const { Title, Paragraph } = Typography;
+const { Option } = Select;
 
 const AnimatedBackground = styled.div`
   background: linear-gradient(-45deg, #155725, #153b57, #9e9c1b);
@@ -63,8 +66,33 @@ const Timers = () => {
   const [controlsVisible, setControlsVisible] = useState(false);
   const [currentTask, setCurrentTask] = useState("");
   const [displayedTask, setDisplayedTask] = useState("");
-  const [isTaskEntered, setIsTaskEntered] = useState(false); // New state to track if task is entered
+  const [selectedTaskText, setSelectedTaskText] = useState(""); 
+
+  const [isTaskEntered, setIsTaskEntered] = useState(false); 
   const chimeRef = useRef(null);
+  const token = Auth.getProfile();
+  const profileId = token.data._id;
+
+  const { loading: loadingTasks, data: tasksData } = useQuery(QUERY_TODOS, {
+    variables: { profileId: profileId },
+  });
+
+  // Function to handle selecting a task from the dropdown and hiding the drop doown once something is selected
+  const handleSelectTask = (value) => {
+    const selectedTask = tasksData.todos.find(task => task._id === value);
+    setSelectedTaskText(selectedTask.text); 
+    setIsTaskEntered(true); // a task is selected
+    setShowDropdown(false); // Hide dropdown
+  };
+
+  const [showDropdown, setShowDropdown] = useState(true);
+
+  const handleNewTaskClick = () => {
+    setShowDropdown(true);  // Show the dropdown
+    setSelectedTaskText(""); 
+    setIsTaskEntered(false); 
+  };
+
 
   const showBreakModal = (duration) => {
     setTimeLeft(duration * 60);
@@ -138,48 +166,55 @@ const Timers = () => {
           style={{ textAlign: "center", fontSize: "24px", color: "#615a58" }}
         >
           Timer
-        </Title>
+          </Title>
         <Divider />
-        <div style={{ position: "relative" }}>
-          <Paragraph
-            style={{
-              textAlign: "center",
-              color: "#615a58",
-              fontSize: "18px",
-              marginBottom: "10px",
-              fontSize: "24px",
-              fontWeight: isTaskEntered ? "bold" : "normal", // Apply bold font weight when the task is entered
-            }}
-          >
-            {displayedTask}
+        {isTaskEntered && (
+        <>
+          <Paragraph style={{ textAlign: "center", fontWeight: "bold" }}>
+            Currently working on: {selectedTaskText}
           </Paragraph>
-          {displayedTask && (
-            <DeleteButtonContainer>
-              <SmallButton type="primary" danger onClick={deleteTask}>
-                <DeleteOutlined />
-              </SmallButton>
-            </DeleteButtonContainer>
-          )}
-        </div>
+          <Button onClick={handleNewTaskClick} type="default" style={{ display: "block", margin: "10px auto", backgroundColor: "#B2C9AB" }}>
+            <DeleteOutlined /> Select new task
+          </Button>
+        </>
+      )}
         <ClockCircleOutlined
           style={{
-            fontSize: "150px",
+            fontSize: "130px",
             color: "#615a58",
             display: "block",
             margin: "auto",
+            bottomMargin: "10px",
           }}
-        />
+          />
+         {/* Task selection dropdown */}
+         {!isTaskEntered && (
+        <>
+          {loadingTasks ? (
+            <p>Loading tasks...</p>
+          ) : (
+            <Select
+              showSearch
+              style={{ width: '100%', margin: '10px' }}
+              placeholder="Select a task to work on"
+              onChange={handleSelectTask}
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {tasksData && tasksData.todos.map(task => (
+                <Option key={task._id} value={task._id}>{task.text}</Option>
+              ))}
+            </Select>
+          )}
+        </>
+      )}
+    
         <Title level={3} style={{ textAlign: "center", color: "#615a58" }}>
           {formatTime(timeLeft)}
         </Title>
         <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <Input
-            placeholder="Enter current task"
-            value={currentTask}
-            onChange={(e) => setCurrentTask(e.target.value)}
-            onPressEnter={handleInputEnter}
-            style={{ display: displayedTask ? "none" : "block" }}
-          />
+         
           <Button className="timer-button" onClick={() => startTimer(25)}>
             25 min
           </Button>
@@ -231,9 +266,6 @@ const Timers = () => {
           height: "100vh",
           overflowY: "auto",
         }}
-        closeIcon={
-          <div style={{ position: 'fixed', fontSize: '22px', top: '9px', right: '37px' }}>X</div>
-        }
       >
         <AnimatedBackground>
           <TimerContent>
@@ -243,7 +275,7 @@ const Timers = () => {
               duration={timeLeft}
               colors={[["#00a2ae"]]}
               onComplete={handleBreakTimerComplete}
-              size={550} // timer size
+              size={550} 
             >
               {({ remainingTime }) => (
                 <>

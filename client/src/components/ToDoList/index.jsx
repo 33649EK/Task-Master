@@ -9,15 +9,21 @@ const TodoList = () => {
   const token = Auth.getProfile();
 
   const [todos, setTodos] = useState();
-  const [, forceUpdate] = useState(); // used to force a re-render when the todos array changes
   const [visible, setVisible] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
   const [inputValue, setInputValue] = useState('');
 
-  const { loading, data } = useQuery(QUERY_TODOS, {
+  const { loading, data, refetch } = useQuery(QUERY_TODOS, {
     variables: { profileId: token.data._id },
+    fetchPolicy: 'network-only' // makes sure the drop down keeps getting fresh data
   });
-  const [addTodo] = useMutation(ADD_TODO);
+
+ const [addTodo] = useMutation(ADD_TODO, {
+    onCompleted: () => {
+      refetch();
+    }
+  });
+  
   const [removeTodo] = useMutation(REMOVE_TODO);
   const [setCompleted] = useMutation(SET_COMPLETED);
 
@@ -81,11 +87,12 @@ const TodoList = () => {
         padding: '20px',
       }}
     >
-     {/* Title for the To-Do List */}
+       {/* Title for the To-Do List */}
      <h2 style={{ textAlign: "center", fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'", fontSize: "24px", fontWeight: 600, color: "#615a58" }}>To Do List</h2>
+
       <div className="input-container">
         <Input
-          placeholder="Add new item"
+          placeholder="Add to do list item"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onPressEnter={handleAdd}
@@ -155,9 +162,6 @@ const TodoList = () => {
           </div>,
         ]}
         className="modal"
-        closeIcon={
-          <div style={{ position: 'absolute', top: '4px', right: '10px' }}>X</div>
-        }
       >
         <p style={{ textAlign: 'center' }}>Do you want to delete this item?</p>
       </Modal>
