@@ -171,6 +171,9 @@ const Header = () => {
         onOk={handleOk}
         onCancel={handleCancel}
         style={{ fontSize: '25px', textAlign:'center' }}
+        closeIcon={
+          <div style={{ position: 'absolute', top: '4px', right: '10px' }}>X</div>
+        }
       >
         <p>
 Struggling to stay on top of your to do lists? Having a difficult time focusing? <strong>Let us help!</strong><br />

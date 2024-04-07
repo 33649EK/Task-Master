@@ -231,6 +231,9 @@ const Timers = () => {
           height: "100vh",
           overflowY: "auto",
         }}
+        closeIcon={
+          <div style={{ position: 'fixed', fontSize: '22px', top: '9px', right: '37px' }}>X</div>
+        }
       >
         <AnimatedBackground>
           <TimerContent>

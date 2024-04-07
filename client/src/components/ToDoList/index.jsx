@@ -155,6 +155,9 @@ const TodoList = () => {
           </div>,
         ]}
         className="modal"
+        closeIcon={
+          <div style={{ position: 'absolute', top: '4px', right: '10px' }}>X</div>
+        }
       >
         <p style={{ textAlign: 'center' }}>Do you want to delete this item?</p>
       </Modal>
