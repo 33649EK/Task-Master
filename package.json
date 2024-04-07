@@ -1,5 +1,5 @@
 {
-  "name": "Task-Master",
+  "name": "task-master",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
