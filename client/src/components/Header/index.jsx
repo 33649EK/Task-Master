@@ -151,7 +151,8 @@ const Header = () => {
       <FloatButton.Group
         trigger="click"
         style={{
-          right: 80,
+          left: 80,
+          top: 80,
         }}
         icon={<CustomerServiceOutlined />}
         tooltip="Calming Sounds"
