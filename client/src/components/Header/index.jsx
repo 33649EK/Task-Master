@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, FloatButton, Modal } from 'antd';
 import Auth from '../../utils/auth';
-import { InfoCircleOutlined, DollarOutlined, CustomerServiceOutlined, CommentOutlined, HeatMapOutlined, MoonOutlined} from '@ant-design/icons';
+import { InfoCircleOutlined, DollarOutlined, CustomerServiceOutlined, HeatMapOutlined, MoonOutlined} from '@ant-design/icons';
 import RainSvg from '../Svg/Rain';
 import rainSound from '../../assets/rain&vibe.mp3'
 import pianoSound from '../../assets/piano.mp3'
@@ -38,6 +38,7 @@ const Header = () => {
       poppyRef.current.volume = 0.15;
     }
   }, [navigate, location.pathname]);
+
 
   const playRain = () => {
     if (rainRef.current) {

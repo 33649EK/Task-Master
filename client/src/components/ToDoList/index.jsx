@@ -107,11 +107,7 @@ const TodoList = () => {
               <List.Item
                 key={item._id}
                 style={{
-                  backgroundColor: item.isCompleted
-                    ? '#f0f0f0'
-                    : item.checked
-                    ? '#f4bd96'
-                    : 'transparent',
+                  backgroundColor: item.isCompleted ? 'transparent' : '#E8DDB5',
                 }}
               >
                 <Checkbox

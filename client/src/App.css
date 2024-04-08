@@ -47,7 +47,7 @@ body {
   text-shadow: 0 -.5px 0 rgba(0,0,0,.12);
   box-shadow: 0 2px 0 rgba(0,0,0,.045);
 }
-
+/* Theme */
 /* Header main container */
 .header-main {
   display: flex;
@@ -103,7 +103,7 @@ body {
 
 
 /*timer component styling*/
-
+/* Theme */
 .timer-container {
   background-color: var(--lightblue); 
   
@@ -275,6 +275,7 @@ body {
     padding-left: 10px;
   }
 
+  /* Theme */
   .layout-container {
     display: flex;
     justify-content: space-between;
