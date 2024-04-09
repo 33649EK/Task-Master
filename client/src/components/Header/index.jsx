@@ -4,9 +4,13 @@ import { Button, FloatButton, Modal } from 'antd';
 import Auth from '../../utils/auth';
 import { InfoCircleOutlined, DollarOutlined, CustomerServiceOutlined, HeatMapOutlined, MoonOutlined } from '@ant-design/icons';
 import RainSvg from '../Svg/Rain';
+import SkullSvg from '../Svg/Skull';
+import TrumpetSvg from '../Svg/Trumpet';
 import rainSound from '../../assets/rain&vibe.mp3';
 import pianoSound from '../../assets/piano.mp3';
 import poppySound from '../../assets/poppy.mp3';
+import spookySound from '../../assets/spooky.mp3';
+import funkySound from '../../assets/funky.mp3';
 
 const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -15,6 +19,8 @@ const Header = () => {
   const rainRef = useRef(null);
   const pianoRef = useRef(null);
   const poppyRef = useRef(null);
+  const spookyRef = useRef(null);
+  const funkyRef = useRef(null);
 
   useEffect(() => {
     if (!Auth.loggedIn()) {
@@ -36,6 +42,12 @@ const Header = () => {
     }
     if (poppyRef.current) {
       poppyRef.current.volume = 0.15;
+    }
+    if (spookyRef.current) {
+      spookyRef.current.volume = 0.25;
+    }
+    if (funkyRef.current) {
+      funkyRef.current.volume = 0.25;
     }
   }, [navigate, location.pathname]);
 
@@ -74,6 +86,30 @@ const Header = () => {
       }
     }
   };
+
+const playspooky = () => {
+  // Play or pause spooky sound
+  if (spookyRef.current) {
+    if (!spookyRef.current.paused) {
+      spookyRef.current.pause();
+    } else {
+      spookyRef.current.currentTime = 0;
+      spookyRef.current.play();
+    }
+  }
+};
+
+const playfunky = () => {
+  // Play or pause funky sound
+  if (funkyRef.current) {
+    if (!funkyRef.current.paused) {
+      funkyRef.current.pause();
+    } else {
+      funkyRef.current.currentTime = 0;
+      funkyRef.current.play();
+    }
+  }
+};
 
   const showAboutModal = () => {
     setIsModalVisible(true);
@@ -151,12 +187,13 @@ const Header = () => {
       <FloatButton.Group
         trigger="click"
         style={{
-          left: 80,
-          top: 80,
+          right: 80,
         }}
         icon={<CustomerServiceOutlined />}
         tooltip="Calming Sounds"
       >
+        <FloatButton icon={<TrumpetSvg />} onClick={playfunky} />
+        <FloatButton icon={<SkullSvg />} onClick={playspooky} />
         <FloatButton icon={<RainSvg />} onClick={playRain} />
         <FloatButton icon={<MoonOutlined />} onClick={playPiano} />
         <FloatButton icon={<HeatMapOutlined />} onClick={playPoppy} />
@@ -166,6 +203,8 @@ const Header = () => {
       <audio ref={rainRef} src={rainSound} hidden></audio>
       <audio ref={pianoRef} src={pianoSound} hidden></audio>
       <audio ref={poppyRef} src={poppySound} hidden></audio>
+      <audio ref={spookyRef} src={spookySound} hidden></audio>
+      <audio ref={funkyRef} src={funkySound} hidden></audio>
 
       {/* Modal for About button */}
       <Modal
