@@ -44,28 +44,28 @@ const Header = () => {
       }
     }
     if (rainRef.current) {
-      rainRef.current.volume = 0.15;
+      rainRef.current.volume = 0.5;
     }
     if (pianoRef.current) {
-      pianoRef.current.volume = 0.15;
+      pianoRef.current.volume = 0.5;
     }
     if (poppyRef.current) {
-      poppyRef.current.volume = 0.15;
+      poppyRef.current.volume = 0.5;
     }
     if (spookyRef.current) {
-      spookyRef.current.volume = 0.25;
+      spookyRef.current.volume = 0.7;
     }
     if (funkyRef.current) {
-      funkyRef.current.volume = 0.25;
+      funkyRef.current.volume = 0.5;
     }
     if (bassRef.current) {
-      bassRef.current.volume = 0.25;
+      bassRef.current.volume = 0.5;
     }
     if (metalRef.current) {
-      metalRef.current.volume = 0.25;
+      metalRef.current.volume = 0.5;
     }
     if (magicRef.current) {
-      magicRef.current.volume = 0.35;
+      magicRef.current.volume = 0.5;
     }
   }, [navigate, location.pathname]);
 
