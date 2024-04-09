@@ -6,11 +6,17 @@ import { InfoCircleOutlined, DollarOutlined, CustomerServiceOutlined, HeatMapOut
 import RainSvg from '../Svg/Rain';
 import SkullSvg from '../Svg/Skull';
 import TrumpetSvg from '../Svg/Trumpet';
+import MetalSvg from '../Svg/Metal';
+import BassSvg from '../Svg/Bass';
+import MagicSvg from '../Svg/Magic';
 import rainSound from '../../assets/rain&vibe.mp3';
 import pianoSound from '../../assets/piano.mp3';
 import poppySound from '../../assets/poppy.mp3';
 import spookySound from '../../assets/spooky.mp3';
 import funkySound from '../../assets/funky.mp3';
+import bassSound from '../../assets/bass.mp3';
+import metalSound from '../../assets/metal.mp3';
+import magicSound from '../../assets/magic.mp3';
 
 const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -21,6 +27,9 @@ const Header = () => {
   const poppyRef = useRef(null);
   const spookyRef = useRef(null);
   const funkyRef = useRef(null);
+  const bassRef = useRef(null);
+  const metalRef = useRef(null);
+  const magicRef = useRef(null);
 
   useEffect(() => {
     if (!Auth.loggedIn()) {
@@ -48,6 +57,15 @@ const Header = () => {
     }
     if (funkyRef.current) {
       funkyRef.current.volume = 0.25;
+    }
+    if (bassRef.current) {
+      bassRef.current.volume = 0.25;
+    }
+    if (metalRef.current) {
+      metalRef.current.volume = 0.25;
+    }
+    if (magicRef.current) {
+      magicRef.current.volume = 0.35;
     }
   }, [navigate, location.pathname]);
 
@@ -87,7 +105,7 @@ const Header = () => {
     }
   };
 
-const playspooky = () => {
+const playSpooky = () => {
   // Play or pause spooky sound
   if (spookyRef.current) {
     if (!spookyRef.current.paused) {
@@ -99,7 +117,7 @@ const playspooky = () => {
   }
 };
 
-const playfunky = () => {
+const playFunky = () => {
   // Play or pause funky sound
   if (funkyRef.current) {
     if (!funkyRef.current.paused) {
@@ -107,6 +125,42 @@ const playfunky = () => {
     } else {
       funkyRef.current.currentTime = 0;
       funkyRef.current.play();
+    }
+  }
+};
+
+const playBass = () => {
+  // Play or pause bass sound
+  if (bassRef.current) {
+    if (!bassRef.current.paused) {
+      bassRef.current.pause();
+    } else {
+      bassRef.current.currentTime = 0;
+      bassRef.current.play();
+    }
+  }
+};
+
+const playMetal = () => {
+  // Play or pause metal sound
+  if (metalRef.current) {
+    if (!metalRef.current.paused) {
+      metalRef.current.pause();
+    } else {
+      metalRef.current.currentTime = 0;
+      metalRef.current.play();
+    }
+  }
+};
+
+const playMagic = () => {
+  // Play or pause magic sound
+  if (magicRef.current) {
+    if (!magicRef.current.paused) {
+      magicRef.current.pause();
+    } else {
+      magicRef.current.currentTime = 0;
+      magicRef.current.play();
     }
   }
 };
@@ -192,11 +246,14 @@ const playfunky = () => {
         icon={<CustomerServiceOutlined />}
         tooltip="Calming Sounds"
       >
-        <FloatButton icon={<TrumpetSvg />} onClick={playfunky} />
-        <FloatButton icon={<SkullSvg />} onClick={playspooky} />
-        <FloatButton icon={<RainSvg />} onClick={playRain} />
-        <FloatButton icon={<MoonOutlined />} onClick={playPiano} />
-        <FloatButton icon={<HeatMapOutlined />} onClick={playPoppy} />
+        <FloatButton icon={<SkullSvg />} onClick={playSpooky} tooltip="Beware"/>
+        <FloatButton icon={<BassSvg />} onClick={playBass} tooltip="Bassy"/>
+        <FloatButton icon={<MetalSvg />} onClick={playMetal} tooltip="Metal"/>
+        <FloatButton icon={<TrumpetSvg />} onClick={playFunky} tooltip="Funky"/>
+        <FloatButton icon={<MagicSvg />} onClick={playMagic} tooltip="magic"/>
+        <FloatButton icon={<RainSvg />} onClick={playRain} tooltip="Rain"/>
+        <FloatButton icon={<MoonOutlined />} onClick={playPiano} tooltip="Piano"/>
+        <FloatButton icon={<HeatMapOutlined />} onClick={playPoppy} tooltip="Poppy"/>
       </FloatButton.Group>
 
       {/* Audio elements */}
@@ -205,6 +262,9 @@ const playfunky = () => {
       <audio ref={poppyRef} src={poppySound} hidden></audio>
       <audio ref={spookyRef} src={spookySound} hidden></audio>
       <audio ref={funkyRef} src={funkySound} hidden></audio>
+      <audio ref={bassRef} src={bassSound} hidden></audio>
+      <audio ref={metalRef} src={metalSound} hidden></audio>
+      <audio ref={magicRef} src={magicSound} hidden></audio>
 
       {/* Modal for About button */}
       <Modal
