@@ -2,7 +2,7 @@
 
 TaskMaster is a comprehensive productivity application designed to streamline your workflow and keep your team on track. TaskMaster provides essential features to enhance organization, focus, and relaxation. 
 
-![TaskMaster](./readmeImage/TaskMaster.png)
+![TaskMaster](./readmeImage/TaskMasterHome.png)
 
 #### Table of Contents:
 -   [Features](#features)
