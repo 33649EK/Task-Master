@@ -1,6 +1,15 @@
 ### TaskMaster
 
-TaskMaster is a comprehensive productivity application designed to streamline your workflow and keep your team on track. TaskMaster provides essential features to enhance organization, focus, and relaxation.
+TaskMaster is a comprehensive productivity application designed to streamline your workflow and keep your team on track. TaskMaster provides essential features to enhance organization, focus, and relaxation. 
+
+![TaskMaster](./readmeImage/TaskMaster.png)
+
+#### Table of Contents:
+-   [Features](#features)
+-   [Getting Started](#getting-started)
+-   [Technologies Used](#technologies-used)
+-   [Who to Blame](#who-to-blame)
+-   [License](#license)
 
 #### Features:
 
@@ -11,6 +20,9 @@ TaskMaster is a comprehensive productivity application designed to streamline yo
 
 #### Getting Started:
 
+Deployed application: [TaskMaster](https://task-master-ahzg.onrender.com)
+
+To run TaskMaster locally:
 1.  Clone this repository to your local machine.
 2.  Install dependencies using `npm install`.
 3.  Start the application with `npm run start`.
