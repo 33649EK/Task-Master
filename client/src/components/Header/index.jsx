@@ -150,6 +150,7 @@ const Header = () => {
       {/* Floating buttons for Music Select */}
       <FloatButton.Group
         trigger="click"
+        placement="bottom"
         style={{
           left: 80,
           top: 80,

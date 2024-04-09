@@ -15,10 +15,11 @@ const TodoList = () => {
 
   const { loading, data, refetch } = useQuery(QUERY_TODOS, {
     variables: { profileId: token.data._id },
-    fetchPolicy: 'network-only' // makes sure the drop down keeps getting fresh data
+    fetchPolicy: 'network-only' 
+    // makes sure the drop down keeps getting fresh data
   });
 
- const [addTodo] = useMutation(ADD_TODO, {
+const [addTodo] = useMutation(ADD_TODO, {
     onCompleted: () => {
       refetch();
     }
@@ -87,8 +88,8 @@ const TodoList = () => {
         padding: '20px',
       }}
     >
-       {/* Title for the To-Do List */}
-     <h2 style={{ textAlign: "center", fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'", fontSize: "24px", fontWeight: 600, color: "#615a58" }}>To Do List</h2>
+      {/* Title for the To-Do List */}
+    <h2 style={{ textAlign: "center", fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'", fontSize: "24px", fontWeight: 600, color: "#615a58" }}>To Do List</h2>
 
       <div className="input-container">
         <Input
