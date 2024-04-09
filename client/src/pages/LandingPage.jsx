@@ -14,6 +14,7 @@ const LandingPage = () => {
           <li><strong>Break Meditation:</strong> Recharge and refocus with guided meditation sessions on our break meditation screen.</li>
           <li><strong>To-Do List:</strong> Stay organized with our customizable to-do list.</li>
           <li><strong>Secure Access:</strong> Enjoy peace of mind with our secure login/logout functionality.</li>
+          <li><strong>Calming Music:</strong>Stay relaxed with built-in calming soundtracks.</li>
         </ul>
         <div className="landing-page-call-to-action">
           Get started with Task Master today!
@@ -24,3 +25,4 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
